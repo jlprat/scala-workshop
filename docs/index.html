@@ -1,0 +1,2122 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Scala Workshop II</title>
+   <meta name="description" content="Introduction about Scala II">
+   <meta name="author" content="Josep Prat">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+	  var link = document.createElement( 'link' );
+	  link.rel = 'stylesheet';
+	  link.type = 'text/css';
+	  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+	  document.getElementsByTagName( 'head' )[0].appendChild( link );
+	</script>
+  </head>
+  <body>
+	<div class="reveal">
+	  <div class="slides">
+		<section data-markdown>
+          <script type="text/template">
+            # Scala Intro II
+            ## Workshop about Scala
+            <img src="images/logo-springernature.svg" alt="SpringerNature" style="border: 0; background-color: white; padding: 10px;">
+            * * *
+            ###### xx/06/2017 - Josep Prat / Jim Kinsey - [@jlprat](https://github.com/jlprat)
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            # Contents
+            - Collections API
+            - For Comprehensions
+            - Curry and Partial Application
+            - Implict values
+            - Future API
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            # Collections
+            ## Immutable vs mutable
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            # Immutable
+            - Never change
+            - Modifications return a new instance
+            - Default in Scala
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            # Mutable
+            - Can change
+            - Updatable or extendable in place
+            - Must be imported
+          </script>
+        </section>
+        <section>
+          <section>
+            <svg width="408pt" height="260pt" viewBox="0.00 0.00 408.00 260.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 256)">
+                <title>scala.collection</title>
+                <!-- Level0 -->
+                <!-- Level1 -->
+                <!-- Level0&#45;&gt;Level1 -->
+                <!-- Level2 -->
+                <!-- Level1&#45;&gt;Level2 -->
+                <!-- Level3 -->
+                <!-- Level2&#45;&gt;Level3 -->
+                <!-- Traversable -->
+                <g id="node6" class="node"><title>Traversable</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/Traversable.html" xlink:title="Traversable">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="258,-252 214,-252 202,-240 202,-228 214,-216 258,-216 270,-228 270,-240 258,-252"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M214,-252C208,-252 202,-246 202,-240"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M202,-228C202,-222 208,-216 214,-216"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M258,-216C264,-216 270,-222 270,-228"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M270,-240C270,-246 264,-252 258,-252"/>
+                    <polyline fill="none" stroke="none" points="258,-252 214,-252 "/>
+                    <path fill="none" stroke="none" d="M214,-252C208,-252 202,-246 202,-240"/>
+                    <polyline fill="none" stroke="none" points="202,-240 202,-228 "/>
+                    <path fill="none" stroke="none" d="M202,-228C202,-222 208,-216 214,-216"/>
+                    <polyline fill="none" stroke="none" points="214,-216 258,-216 "/>
+                    <path fill="none" stroke="none" d="M258,-216C264,-216 270,-222 270,-228"/>
+                    <polyline fill="none" stroke="none" points="270,-228 270,-240 "/>
+                    <path fill="none" stroke="none" d="M270,-240C270,-246 264,-252 258,-252"/>
+                    <text text-anchor="middle" x="236" y="-231" font-family="tahoma" font-size="10.00" fill="white">Traversable</text>
+                  </a>
+                </g>
+                <!-- Iterable -->
+                <g id="node7" class="node"><title>Iterable</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/Iterable.html" xlink:title="Iterable">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="251,-180 221,-180 209,-168 209,-156 221,-144 251,-144 263,-156 263,-168 251,-180"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M221,-180C215,-180 209,-174 209,-168"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M209,-156C209,-150 215,-144 221,-144"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M251,-144C257,-144 263,-150 263,-156"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M263,-168C263,-174 257,-180 251,-180"/>
+                    <polyline fill="none" stroke="none" points="251,-180 221,-180 "/>
+                    <path fill="none" stroke="none" d="M221,-180C215,-180 209,-174 209,-168"/>
+                    <polyline fill="none" stroke="none" points="209,-168 209,-156 "/>
+                    <path fill="none" stroke="none" d="M209,-156C209,-150 215,-144 221,-144"/>
+                    <polyline fill="none" stroke="none" points="221,-144 251,-144 "/>
+                    <path fill="none" stroke="none" d="M251,-144C257,-144 263,-150 263,-156"/>
+                    <polyline fill="none" stroke="none" points="263,-156 263,-168 "/>
+                    <path fill="none" stroke="none" d="M263,-168C263,-174 257,-180 251,-180"/>
+                    <text text-anchor="middle" x="236" y="-159" font-family="tahoma" font-size="10.00" fill="white">Iterable</text>
+                  </a>
+                </g>
+                <!-- Traversable&#45;&gt;Iterable -->
+                <g id="edge6" class="edge"><title>Traversable-&gt;Iterable</title>
+                  <path fill="none" stroke="gray" d="M236,-215.831C236,-208.131 236,-198.974 236,-190.417"/>
+                  <polygon fill="gray" stroke="gray" points="239.5,-190.413 236,-180.413 232.5,-190.413 239.5,-190.413"/>
+                </g>
+                <!-- Seq -->
+                <g id="node8" class="node"><title>Seq</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/Seq.html" xlink:title="Seq">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="153,-108 123,-108 111,-96 111,-84 123,-72 153,-72 165,-84 165,-96 153,-108"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M123,-108C117,-108 111,-102 111,-96"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M111,-84C111,-78 117,-72 123,-72"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M153,-72C159,-72 165,-78 165,-84"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M165,-96C165,-102 159,-108 153,-108"/>
+                    <polyline fill="none" stroke="none" points="153,-108 123,-108 "/>
+                    <path fill="none" stroke="none" d="M123,-108C117,-108 111,-102 111,-96"/>
+                    <polyline fill="none" stroke="none" points="111,-96 111,-84 "/>
+                    <path fill="none" stroke="none" d="M111,-84C111,-78 117,-72 123,-72"/>
+                    <polyline fill="none" stroke="none" points="123,-72 153,-72 "/>
+                    <path fill="none" stroke="none" d="M153,-72C159,-72 165,-78 165,-84"/>
+                    <polyline fill="none" stroke="none" points="165,-84 165,-96 "/>
+                    <path fill="none" stroke="none" d="M165,-96C165,-102 159,-108 153,-108"/>
+                    <text text-anchor="middle" x="138" y="-87" font-family="tahoma" font-size="10.00" fill="white">Seq</text>
+                  </a>
+                </g>
+                <!-- Iterable&#45;&gt;Seq -->
+                <g id="edge7" class="edge"><title>Iterable-&gt;Seq</title>
+                  <path fill="none" stroke="gray" d="M211.27,-143.831C199.084,-134.878 184.218,-123.956 171.069,-114.295"/>
+                  <polygon fill="gray" stroke="gray" points="172.853,-111.263 162.722,-108.163 168.708,-116.904 172.853,-111.263"/>
+                </g>
+                <!-- Set -->
+                <g id="node11" class="node"><title>Set</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/Set.html" xlink:title="Set">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="251,-108 221,-108 209,-96 209,-84 221,-72 251,-72 263,-84 263,-96 251,-108"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M221,-108C215,-108 209,-102 209,-96"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M209,-84C209,-78 215,-72 221,-72"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M251,-72C257,-72 263,-78 263,-84"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M263,-96C263,-102 257,-108 251,-108"/>
+                    <polyline fill="none" stroke="none" points="251,-108 221,-108 "/>
+                    <path fill="none" stroke="none" d="M221,-108C215,-108 209,-102 209,-96"/>
+                    <polyline fill="none" stroke="none" points="209,-96 209,-84 "/>
+                    <path fill="none" stroke="none" d="M209,-84C209,-78 215,-72 221,-72"/>
+                    <polyline fill="none" stroke="none" points="221,-72 251,-72 "/>
+                    <path fill="none" stroke="none" d="M251,-72C257,-72 263,-78 263,-84"/>
+                    <polyline fill="none" stroke="none" points="263,-84 263,-96 "/>
+                    <path fill="none" stroke="none" d="M263,-96C263,-102 257,-108 251,-108"/>
+                    <text text-anchor="middle" x="236" y="-87" font-family="tahoma" font-size="10.00" fill="white">Set</text>
+                  </a>
+                </g>
+                <!-- Iterable&#45;&gt;Set -->
+                <g id="edge12" class="edge"><title>Iterable-&gt;Set</title>
+                  <path fill="none" stroke="gray" d="M236,-143.831C236,-136.131 236,-126.974 236,-118.417"/>
+                  <polygon fill="gray" stroke="gray" points="239.5,-118.413 236,-108.413 232.5,-118.413 239.5,-118.413"/>
+                </g>
+                <!-- Map -->
+                <g id="node14" class="node"><title>Map</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/Map.html" xlink:title="Map">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="363,-108 333,-108 321,-96 321,-84 333,-72 363,-72 375,-84 375,-96 363,-108"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M333,-108C327,-108 321,-102 321,-96"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M321,-84C321,-78 327,-72 333,-72"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M363,-72C369,-72 375,-78 375,-84"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M375,-96C375,-102 369,-108 363,-108"/>
+                    <polyline fill="none" stroke="none" points="363,-108 333,-108 "/>
+                    <path fill="none" stroke="none" d="M333,-108C327,-108 321,-102 321,-96"/>
+                    <polyline fill="none" stroke="none" points="321,-96 321,-84 "/>
+                    <path fill="none" stroke="none" d="M321,-84C321,-78 327,-72 333,-72"/>
+                    <polyline fill="none" stroke="none" points="333,-72 363,-72 "/>
+                    <path fill="none" stroke="none" d="M363,-72C369,-72 375,-78 375,-84"/>
+                    <polyline fill="none" stroke="none" points="375,-84 375,-96 "/>
+                    <path fill="none" stroke="none" d="M375,-96C375,-102 369,-108 363,-108"/>
+                    <text text-anchor="middle" x="348" y="-87" font-family="tahoma" font-size="10.00" fill="white">Map</text>
+                  </a>
+                </g>
+                <!-- Iterable&#45;&gt;Map -->
+                <g id="edge17" class="edge"><title>Iterable-&gt;Map</title>
+                  <path fill="none" stroke="gray" d="M263.112,-144.571C277.861,-135.09 296.29,-123.242 312.206,-113.011"/>
+                  <polygon fill="gray" stroke="gray" points="314.23,-115.87 320.749,-107.518 310.445,-109.982 314.23,-115.87"/>
+                </g>
+                <!-- IndexedSeq -->
+                <g id="node9" class="node"><title>IndexedSeq</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/IndexedSeq.html" xlink:title="IndexedSeq">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="78,-36 34,-36 22,-24 22,-12 34,-1.52558e-14 78,-6.06051e-15 90,-12 90,-24 78,-36"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M34,-36C28,-36 22,-30 22,-24"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M22,-12C22,-6 28,-1.65097e-14 34,-1.52558e-14"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M78,-6.06051e-15C84,-4.80661e-15 90,-6 90,-12"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M90,-24C90,-30 84,-36 78,-36"/>
+                    <polyline fill="none" stroke="none" points="78,-36 34,-36 "/>
+                    <path fill="none" stroke="none" d="M34,-36C28,-36 22,-30 22,-24"/>
+                    <polyline fill="none" stroke="none" points="22,-24 22,-12 "/>
+                    <path fill="none" stroke="none" d="M22,-12C22,-6 28,-1.65097e-14 34,-1.52558e-14"/>
+                    <polyline fill="none" stroke="none" points="34,-1.52558e-14 78,-6.06051e-15 "/>
+                    <path fill="none" stroke="none" d="M78,-6.06051e-15C84,-4.80661e-15 90,-6 90,-12"/>
+                    <polyline fill="none" stroke="none" points="90,-12 90,-24 "/>
+                    <path fill="none" stroke="none" d="M90,-24C90,-30 84,-36 78,-36"/>
+                    <text text-anchor="middle" x="56" y="-15" font-family="tahoma" font-size="10.00" fill="white">IndexedSeq</text>
+                  </a>
+                </g>
+                <!-- Seq&#45;&gt;IndexedSeq -->
+                <g id="edge8" class="edge"><title>Seq-&gt;IndexedSeq</title>
+                  <path fill="none" stroke="gray" d="M117.308,-71.8314C107.305,-63.0485 95.145,-52.3712 84.3001,-42.8489"/>
+                  <polygon fill="gray" stroke="gray" points="86.5092,-40.1308 76.6854,-36.1628 81.8906,-45.3909 86.5092,-40.1308"/>
+                </g>
+                <!-- LinearSeq -->
+                <g id="node10" class="node"><title>LinearSeq</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/LinearSeq.html" xlink:title="LinearSeq">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="156,-36 120,-36 108,-24 108,-12 120,-1.49214e-14 156,-6.39488e-15 168,-12 168,-24 156,-36"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M120,-36C114,-36 108,-30 108,-24"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M108,-12C108,-6 114,-1.63425e-14 120,-1.49214e-14"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M156,-6.39488e-15C162,-4.9738e-15 168,-6 168,-12"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M168,-24C168,-30 162,-36 156,-36"/>
+                    <polyline fill="none" stroke="none" points="156,-36 120,-36 "/>
+                    <path fill="none" stroke="none" d="M120,-36C114,-36 108,-30 108,-24"/>
+                    <polyline fill="none" stroke="none" points="108,-24 108,-12 "/>
+                    <path fill="none" stroke="none" d="M108,-12C108,-6 114,-1.63425e-14 120,-1.49214e-14"/>
+                    <polyline fill="none" stroke="none" points="120,-1.49214e-14 156,-6.39488e-15 "/>
+                    <path fill="none" stroke="none" d="M156,-6.39488e-15C162,-4.9738e-15 168,-6 168,-12"/>
+                    <polyline fill="none" stroke="none" points="168,-12 168,-24 "/>
+                    <path fill="none" stroke="none" d="M168,-24C168,-30 162,-36 156,-36"/>
+                    <text text-anchor="middle" x="138" y="-15" font-family="tahoma" font-size="10.00" fill="white">LinearSeq</text>
+                  </a>
+                </g>
+                <!-- Seq&#45;&gt;LinearSeq -->
+                <g id="edge10" class="edge"><title>Seq-&gt;LinearSeq</title>
+                  <path fill="none" stroke="gray" d="M138,-71.8314C138,-64.131 138,-54.9743 138,-46.4166"/>
+                  <polygon fill="gray" stroke="gray" points="141.5,-46.4132 138,-36.4133 134.5,-46.4133 141.5,-46.4132"/>
+                </g>
+                <!-- SortedSet -->
+                <g id="node12" class="node"><title>SortedSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/SortedSet.html" xlink:title="SortedSet">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="234,-36 198,-36 186,-24 186,-12 198,-1.49214e-14 234,-6.39488e-15 246,-12 246,-24 234,-36"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M198,-36C192,-36 186,-30 186,-24"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M186,-12C186,-6 192,-1.63425e-14 198,-1.49214e-14"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M234,-6.39488e-15C240,-4.9738e-15 246,-6 246,-12"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M246,-24C246,-30 240,-36 234,-36"/>
+                    <polyline fill="none" stroke="none" points="234,-36 198,-36 "/>
+                    <path fill="none" stroke="none" d="M198,-36C192,-36 186,-30 186,-24"/>
+                    <polyline fill="none" stroke="none" points="186,-24 186,-12 "/>
+                    <path fill="none" stroke="none" d="M186,-12C186,-6 192,-1.63425e-14 198,-1.49214e-14"/>
+                    <polyline fill="none" stroke="none" points="198,-1.49214e-14 234,-6.39488e-15 "/>
+                    <path fill="none" stroke="none" d="M234,-6.39488e-15C240,-4.9738e-15 246,-6 246,-12"/>
+                    <polyline fill="none" stroke="none" points="246,-12 246,-24 "/>
+                    <path fill="none" stroke="none" d="M246,-24C246,-30 240,-36 234,-36"/>
+                    <text text-anchor="middle" x="216" y="-15" font-family="tahoma" font-size="10.00" fill="white">SortedSet</text>
+                  </a>
+                </g>
+                <!-- Set&#45;&gt;SortedSet -->
+                <g id="edge13" class="edge"><title>Set-&gt;SortedSet</title>
+                  <path fill="none" stroke="gray" d="M230.953,-71.8314C228.791,-64.0463 226.215,-54.7729 223.815,-46.1347"/>
+                  <polygon fill="gray" stroke="gray" points="227.164,-45.1117 221.115,-36.4133 220.419,-46.9852 227.164,-45.1117"/>
+                </g>
+                <!-- BitSet -->
+                <g id="node13" class="node"><title>BitSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/BitSet.html" xlink:title="BitSet">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="306,-36 276,-36 264,-24 264,-12 276,-1.46056e-14 306,-6.71068e-15 318,-12 318,-24 306,-36"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M276,-36C270,-36 264,-30 264,-24"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M264,-12C264,-6 270,-1.61846e-14 276,-1.46056e-14"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M306,-6.71068e-15C312,-5.1317e-15 318,-6 318,-12"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M318,-24C318,-30 312,-36 306,-36"/>
+                    <polyline fill="none" stroke="none" points="306,-36 276,-36 "/>
+                    <path fill="none" stroke="none" d="M276,-36C270,-36 264,-30 264,-24"/>
+                    <polyline fill="none" stroke="none" points="264,-24 264,-12 "/>
+                    <path fill="none" stroke="none" d="M264,-12C264,-6 270,-1.61846e-14 276,-1.46056e-14"/>
+                    <polyline fill="none" stroke="none" points="276,-1.46056e-14 306,-6.71068e-15 "/>
+                    <path fill="none" stroke="none" d="M306,-6.71068e-15C312,-5.1317e-15 318,-6 318,-12"/>
+                    <polyline fill="none" stroke="none" points="318,-12 318,-24 "/>
+                    <path fill="none" stroke="none" d="M318,-24C318,-30 312,-36 306,-36"/>
+                    <text text-anchor="middle" x="291" y="-15" font-family="tahoma" font-size="10.00" fill="white">BitSet</text>
+                  </a>
+                </g>
+                <!-- Set&#45;&gt;BitSet -->
+                <g id="edge15" class="edge"><title>Set-&gt;BitSet</title>
+                  <path fill="none" stroke="gray" d="M249.879,-71.8314C256.214,-63.5386 263.838,-53.557 270.793,-44.4533"/>
+                  <polygon fill="gray" stroke="gray" points="273.645,-46.4847 276.934,-36.4133 268.083,-42.2353 273.645,-46.4847"/>
+                </g>
+                <!-- SortedMap -->
+                <g id="node15" class="node"><title>SortedMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/SortedMap.html" xlink:title="SortedMap">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="388,-36 348,-36 336,-24 336,-12 348,-1.5099e-14 388,-6.21725e-15 400,-12 400,-24 388,-36"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M348,-36C342,-36 336,-30 336,-24"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M336,-12C336,-6 342,-1.64313e-14 348,-1.5099e-14"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M388,-6.21725e-15C394,-4.88498e-15 400,-6 400,-12"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M400,-24C400,-30 394,-36 388,-36"/>
+                    <polyline fill="none" stroke="none" points="388,-36 348,-36 "/>
+                    <path fill="none" stroke="none" d="M348,-36C342,-36 336,-30 336,-24"/>
+                    <polyline fill="none" stroke="none" points="336,-24 336,-12 "/>
+                    <path fill="none" stroke="none" d="M336,-12C336,-6 342,-1.64313e-14 348,-1.5099e-14"/>
+                    <polyline fill="none" stroke="none" points="348,-1.5099e-14 388,-6.21725e-15 "/>
+                    <path fill="none" stroke="none" d="M388,-6.21725e-15C394,-4.88498e-15 400,-6 400,-12"/>
+                    <polyline fill="none" stroke="none" points="400,-12 400,-24 "/>
+                    <path fill="none" stroke="none" d="M400,-24C400,-30 394,-36 388,-36"/>
+                    <text text-anchor="middle" x="368" y="-15" font-family="tahoma" font-size="10.00" fill="white">SortedMap</text>
+                  </a>
+                </g>
+                <!-- Map&#45;&gt;SortedMap -->
+                <g id="edge18" class="edge"><title>Map-&gt;SortedMap</title>
+                  <path fill="none" stroke="gray" d="M353.047,-71.8314C355.209,-64.0463 357.785,-54.7729 360.185,-46.1347"/>
+                  <polygon fill="gray" stroke="gray" points="363.581,-46.9852 362.885,-36.4133 356.836,-45.1117 363.581,-46.9852"/>
+                </g>
+              </g>
+            </svg>
+            <br>
+            <small>* (c) https://github.com/sirthias/scala-collections-charts</small>
+          </section>
+          <section>
+            <svg width="579pt" height="450pt" viewBox="0.00 0.00 613.00 476.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g id="graph1" class="graph" transform="scale(0.944444 0.944444) rotate(0) translate(4 472)">
+                <title>scala.collection.immutable</title>
+                <!-- Level0 -->
+                <!-- Level1 -->
+                <!-- Level0&#45;&gt;Level1 -->
+                <!-- Level2 -->
+                <!-- Level1&#45;&gt;Level2 -->
+                <!-- Level3 -->
+                <!-- Level2&#45;&gt;Level3 -->
+                <!-- Level4 -->
+                <!-- Level3&#45;&gt;Level4 -->
+                <!-- Level5 -->
+                <!-- Level4&#45;&gt;Level5 -->
+                <!-- iTraversable -->
+                <g id="node8" class="node"><title>iTraversable</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/Traversable.html" xlink:title="Traversable">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="348,-468 304,-468 292,-456 292,-444 304,-432 348,-432 360,-444 360,-456 348,-468"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M304,-468C298,-468 292,-462 292,-456"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M292,-444C292,-438 298,-432 304,-432"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M348,-432C354,-432 360,-438 360,-444"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M360,-456C360,-462 354,-468 348,-468"/>
+                    <polyline fill="none" stroke="none" points="348,-468 304,-468 "/>
+                    <path fill="none" stroke="none" d="M304,-468C298,-468 292,-462 292,-456"/>
+                    <polyline fill="none" stroke="none" points="292,-456 292,-444 "/>
+                    <path fill="none" stroke="none" d="M292,-444C292,-438 298,-432 304,-432"/>
+                    <polyline fill="none" stroke="none" points="304,-432 348,-432 "/>
+                    <path fill="none" stroke="none" d="M348,-432C354,-432 360,-438 360,-444"/>
+                    <polyline fill="none" stroke="none" points="360,-444 360,-456 "/>
+                    <path fill="none" stroke="none" d="M360,-456C360,-462 354,-468 348,-468"/>
+                    <text text-anchor="middle" x="326" y="-447" font-family="tahoma" font-size="10.00" fill="white">Traversable</text>
+                  </a>
+                </g>
+                <!-- iIterable -->
+                <g id="node9" class="node"><title>iIterable</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/Iterable.html" xlink:title="Iterable">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="341,-396 311,-396 299,-384 299,-372 311,-360 341,-360 353,-372 353,-384 341,-396"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M311,-396C305,-396 299,-390 299,-384"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M299,-372C299,-366 305,-360 311,-360"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M341,-360C347,-360 353,-366 353,-372"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M353,-384C353,-390 347,-396 341,-396"/>
+                    <polyline fill="none" stroke="none" points="341,-396 311,-396 "/>
+                    <path fill="none" stroke="none" d="M311,-396C305,-396 299,-390 299,-384"/>
+                    <polyline fill="none" stroke="none" points="299,-384 299,-372 "/>
+                    <path fill="none" stroke="none" d="M299,-372C299,-366 305,-360 311,-360"/>
+                    <polyline fill="none" stroke="none" points="311,-360 341,-360 "/>
+                    <path fill="none" stroke="none" d="M341,-360C347,-360 353,-366 353,-372"/>
+                    <polyline fill="none" stroke="none" points="353,-372 353,-384 "/>
+                    <path fill="none" stroke="none" d="M353,-384C353,-390 347,-396 341,-396"/>
+                    <text text-anchor="middle" x="326" y="-375" font-family="tahoma" font-size="10.00" fill="white">Iterable</text>
+                  </a>
+                </g>
+                <!-- iTraversable&#45;&gt;iIterable -->
+                <g id="edge14" class="edge"><title>iTraversable-&gt;iIterable</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M326,-431.831C326,-424.131 326,-414.974 326,-406.417"/>
+                  <polygon fill="gray" stroke="gray" points="329.5,-406.413 326,-396.413 322.5,-406.413 329.5,-406.413"/>
+                </g>
+                <!-- iSet -->
+                <g id="node10" class="node"><title>iSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/Set.html" xlink:title="Set">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="214,-324 184,-324 172,-312 172,-300 184,-288 214,-288 226,-300 226,-312 214,-324"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M184,-324C178,-324 172,-318 172,-312"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M172,-300C172,-294 178,-288 184,-288"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M214,-288C220,-288 226,-294 226,-300"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M226,-312C226,-318 220,-324 214,-324"/>
+                    <polyline fill="none" stroke="none" points="214,-324 184,-324 "/>
+                    <path fill="none" stroke="none" d="M184,-324C178,-324 172,-318 172,-312"/>
+                    <polyline fill="none" stroke="none" points="172,-312 172,-300 "/>
+                    <path fill="none" stroke="none" d="M172,-300C172,-294 178,-288 184,-288"/>
+                    <polyline fill="none" stroke="none" points="184,-288 214,-288 "/>
+                    <path fill="none" stroke="none" d="M214,-288C220,-288 226,-294 226,-300"/>
+                    <polyline fill="none" stroke="none" points="226,-300 226,-312 "/>
+                    <path fill="none" stroke="none" d="M226,-312C226,-318 220,-324 214,-324"/>
+                    <text text-anchor="middle" x="199" y="-303" font-family="tahoma" font-size="10.00" fill="white">Set</text>
+                  </a>
+                </g>
+                <!-- iIterable&#45;&gt;iSet -->
+                <g id="edge37" class="edge"><title>iIterable-&gt;iSet</title>
+                  <path fill="none" stroke="gray" d="M298.755,-362.554C280.173,-352.019 255.362,-337.953 235.133,-326.485"/>
+                  <polygon fill="gray" stroke="gray" points="236.625,-323.307 226.2,-321.42 233.173,-329.397 236.625,-323.307"/>
+                </g>
+                <!-- iSeq -->
+                <g id="node16" class="node"><title>iSeq</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/Seq.html" xlink:title="Seq">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="341,-180 311,-180 299,-168 299,-156 311,-144 341,-144 353,-156 353,-168 341,-180"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M311,-180C305,-180 299,-174 299,-168"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M299,-156C299,-150 305,-144 311,-144"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M341,-144C347,-144 353,-150 353,-156"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M353,-168C353,-174 347,-180 341,-180"/>
+                    <polyline fill="none" stroke="none" points="341,-180 311,-180 "/>
+                    <path fill="none" stroke="none" d="M311,-180C305,-180 299,-174 299,-168"/>
+                    <polyline fill="none" stroke="none" points="299,-168 299,-156 "/>
+                    <path fill="none" stroke="none" d="M299,-156C299,-150 305,-144 311,-144"/>
+                    <polyline fill="none" stroke="none" points="311,-144 341,-144 "/>
+                    <path fill="none" stroke="none" d="M341,-144C347,-144 353,-150 353,-156"/>
+                    <polyline fill="none" stroke="none" points="353,-156 353,-168 "/>
+                    <path fill="none" stroke="none" d="M353,-168C353,-174 347,-180 341,-180"/>
+                    <text text-anchor="middle" x="326" y="-159" font-family="tahoma" font-size="10.00" fill="white">Seq</text>
+                  </a>
+                </g>
+                <!-- iIterable&#45;&gt;iSeq -->
+                <g id="edge16" class="edge"><title>iIterable-&gt;iSeq</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M326,-359.955C326,-322.394 326,-235.554 326,-190.41"/>
+                  <polygon fill="gray" stroke="gray" points="329.5,-190.145 326,-180.145 322.5,-190.145 329.5,-190.145"/>
+                </g>
+                <!-- iMap -->
+                <g id="node27" class="node"><title>iMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/Map.html" xlink:title="Map">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="436,-324 406,-324 394,-312 394,-300 406,-288 436,-288 448,-300 448,-312 436,-324"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M406,-324C400,-324 394,-318 394,-312"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M394,-300C394,-294 400,-288 406,-288"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M436,-288C442,-288 448,-294 448,-300"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M448,-312C448,-318 442,-324 436,-324"/>
+                    <polyline fill="none" stroke="none" points="436,-324 406,-324 "/>
+                    <path fill="none" stroke="none" d="M406,-324C400,-324 394,-318 394,-312"/>
+                    <polyline fill="none" stroke="none" points="394,-312 394,-300 "/>
+                    <path fill="none" stroke="none" d="M394,-300C394,-294 400,-288 406,-288"/>
+                    <polyline fill="none" stroke="none" points="406,-288 436,-288 "/>
+                    <path fill="none" stroke="none" d="M436,-288C442,-288 448,-294 448,-300"/>
+                    <polyline fill="none" stroke="none" points="448,-300 448,-312 "/>
+                    <path fill="none" stroke="none" d="M448,-312C448,-318 442,-324 436,-324"/>
+                    <text text-anchor="middle" x="421" y="-303" font-family="tahoma" font-size="10.00" fill="white">Map</text>
+                  </a>
+                </g>
+                <!-- iIterable&#45;&gt;iMap -->
+                <g id="edge48" class="edge"><title>iIterable-&gt;iMap</title>
+                  <path fill="none" stroke="gray" d="M349.973,-359.831C361.786,-350.878 376.197,-339.956 388.943,-330.295"/>
+                  <polygon fill="gray" stroke="gray" points="391.18,-332.992 397.035,-324.163 386.951,-327.414 391.18,-332.992"/>
+                </g>
+                <!-- iHashSet -->
+                <g id="node11" class="node"><title>iHashSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/HashSet.html" xlink:title="HashSet">
+                    <polygon fill="steelblue" stroke="steelblue" points="64,-252 34,-252 22,-240 22,-228 34,-216 64,-216 76,-228 76,-240 64,-252"/>
+                    <path fill="steelblue" stroke="steelblue" d="M34,-252C28,-252 22,-246 22,-240"/>
+                    <path fill="steelblue" stroke="steelblue" d="M22,-228C22,-222 28,-216 34,-216"/>
+                    <path fill="steelblue" stroke="steelblue" d="M64,-216C70,-216 76,-222 76,-228"/>
+                    <path fill="steelblue" stroke="steelblue" d="M76,-240C76,-246 70,-252 64,-252"/>
+                    <polyline fill="none" stroke="none" points="64,-252 34,-252 "/>
+                    <path fill="none" stroke="none" d="M34,-252C28,-252 22,-246 22,-240"/>
+                    <polyline fill="none" stroke="none" points="22,-240 22,-228 "/>
+                    <path fill="none" stroke="none" d="M22,-228C22,-222 28,-216 34,-216"/>
+                    <polyline fill="none" stroke="none" points="34,-216 64,-216 "/>
+                    <path fill="none" stroke="none" d="M64,-216C70,-216 76,-222 76,-228"/>
+                    <polyline fill="none" stroke="none" points="76,-228 76,-240 "/>
+                    <path fill="none" stroke="none" d="M76,-240C76,-246 70,-252 64,-252"/>
+                    <text text-anchor="middle" x="49" y="-231" font-family="tahoma" font-size="10.00" fill="white">HashSet</text>
+                  </a>
+                </g>
+                <!-- iSet&#45;&gt;iHashSet -->
+                <g id="edge39" class="edge"><title>iSet-&gt;iHashSet</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M171.742,-293.287C150.497,-283.335 120.051,-268.979 85.4641,-252.185"/>
+                  <polygon fill="gray" stroke="gray" points="86.6196,-248.854 76.0963,-247.625 83.5562,-255.149 86.6196,-248.854"/>
+                </g>
+                <!-- iSortedSet -->
+                <g id="node12" class="node"><title>iSortedSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/SortedSet.html" xlink:title="SortedSet">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="142,-252 106,-252 94,-240 94,-228 106,-216 142,-216 154,-228 154,-240 142,-252"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M106,-252C100,-252 94,-246 94,-240"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M94,-228C94,-222 100,-216 106,-216"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M142,-216C148,-216 154,-222 154,-228"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M154,-240C154,-246 148,-252 142,-252"/>
+                    <polyline fill="none" stroke="none" points="142,-252 106,-252 "/>
+                    <path fill="none" stroke="none" d="M106,-252C100,-252 94,-246 94,-240"/>
+                    <polyline fill="none" stroke="none" points="94,-240 94,-228 "/>
+                    <path fill="none" stroke="none" d="M94,-228C94,-222 100,-216 106,-216"/>
+                    <polyline fill="none" stroke="none" points="106,-216 142,-216 "/>
+                    <path fill="none" stroke="none" d="M142,-216C148,-216 154,-222 154,-228"/>
+                    <polyline fill="none" stroke="none" points="154,-228 154,-240 "/>
+                    <path fill="none" stroke="none" d="M154,-240C154,-246 148,-252 142,-252"/>
+                    <text text-anchor="middle" x="124" y="-231" font-family="tahoma" font-size="10.00" fill="white">SortedSet</text>
+                  </a>
+                </g>
+                <!-- iSet&#45;&gt;iSortedSet -->
+                <g id="edge41" class="edge"><title>iSet-&gt;iSortedSet</title>
+                  <path fill="none" stroke="gray" d="M180.074,-287.831C171.014,-279.134 160.019,-268.578 150.173,-259.127"/>
+                  <polygon fill="gray" stroke="gray" points="152.557,-256.563 142.92,-252.163 147.71,-261.613 152.557,-256.563"/>
+                </g>
+                <!-- iBitSet -->
+                <g id="node14" class="node"><title>iBitSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/BitSet.html" xlink:title="BitSet">
+                    <polygon fill="steelblue" stroke="steelblue" points="214,-252 184,-252 172,-240 172,-228 184,-216 214,-216 226,-228 226,-240 214,-252"/>
+                    <path fill="steelblue" stroke="steelblue" d="M184,-252C178,-252 172,-246 172,-240"/>
+                    <path fill="steelblue" stroke="steelblue" d="M172,-228C172,-222 178,-216 184,-216"/>
+                    <path fill="steelblue" stroke="steelblue" d="M214,-216C220,-216 226,-222 226,-228"/>
+                    <path fill="steelblue" stroke="steelblue" d="M226,-240C226,-246 220,-252 214,-252"/>
+                    <polyline fill="none" stroke="none" points="214,-252 184,-252 "/>
+                    <path fill="none" stroke="none" d="M184,-252C178,-252 172,-246 172,-240"/>
+                    <polyline fill="none" stroke="none" points="172,-240 172,-228 "/>
+                    <path fill="none" stroke="none" d="M172,-228C172,-222 178,-216 184,-216"/>
+                    <polyline fill="none" stroke="none" points="184,-216 214,-216 "/>
+                    <path fill="none" stroke="none" d="M214,-216C220,-216 226,-222 226,-228"/>
+                    <polyline fill="none" stroke="none" points="226,-228 226,-240 "/>
+                    <path fill="none" stroke="none" d="M226,-240C226,-246 220,-252 214,-252"/>
+                    <text text-anchor="middle" x="199" y="-231" font-family="tahoma" font-size="10.00" fill="white">BitSet</text>
+                  </a>
+                </g>
+                <!-- iSet&#45;&gt;iBitSet -->
+                <g id="edge44" class="edge"><title>iSet-&gt;iBitSet</title>
+                  <path fill="none" stroke="gray" d="M199,-287.831C199,-280.131 199,-270.974 199,-262.417"/>
+                  <polygon fill="gray" stroke="gray" points="202.5,-262.413 199,-252.413 195.5,-262.413 202.5,-262.413"/>
+                </g>
+                <!-- ListSet -->
+                <g id="node15" class="node"><title>ListSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/ListSet.html" xlink:title="ListSet">
+                    <polygon fill="steelblue" stroke="steelblue" points="286,-252 256,-252 244,-240 244,-228 256,-216 286,-216 298,-228 298,-240 286,-252"/>
+                    <path fill="steelblue" stroke="steelblue" d="M256,-252C250,-252 244,-246 244,-240"/>
+                    <path fill="steelblue" stroke="steelblue" d="M244,-228C244,-222 250,-216 256,-216"/>
+                    <path fill="steelblue" stroke="steelblue" d="M286,-216C292,-216 298,-222 298,-228"/>
+                    <path fill="steelblue" stroke="steelblue" d="M298,-240C298,-246 292,-252 286,-252"/>
+                    <polyline fill="none" stroke="none" points="286,-252 256,-252 "/>
+                    <path fill="none" stroke="none" d="M256,-252C250,-252 244,-246 244,-240"/>
+                    <polyline fill="none" stroke="none" points="244,-240 244,-228 "/>
+                    <path fill="none" stroke="none" d="M244,-228C244,-222 250,-216 256,-216"/>
+                    <polyline fill="none" stroke="none" points="256,-216 286,-216 "/>
+                    <path fill="none" stroke="none" d="M286,-216C292,-216 298,-222 298,-228"/>
+                    <polyline fill="none" stroke="none" points="298,-228 298,-240 "/>
+                    <path fill="none" stroke="none" d="M298,-240C298,-246 292,-252 286,-252"/>
+                    <text text-anchor="middle" x="271" y="-231" font-family="tahoma" font-size="10.00" fill="white">ListSet</text>
+                  </a>
+                </g>
+                <!-- iSet&#45;&gt;ListSet -->
+                <g id="edge46" class="edge"><title>iSet-&gt;ListSet</title>
+                  <path fill="none" stroke="gray" d="M217.169,-287.831C225.715,-279.285 236.056,-268.944 245.38,-259.62"/>
+                  <polygon fill="gray" stroke="gray" points="247.991,-261.959 252.587,-252.413 243.041,-257.009 247.991,-261.959"/>
+                </g>
+                <!-- TreeSet -->
+                <g id="node13" class="node"><title>TreeSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/TreeSet.html" xlink:title="TreeSet">
+                    <polygon fill="steelblue" stroke="steelblue" points="139,-180 109,-180 97,-168 97,-156 109,-144 139,-144 151,-156 151,-168 139,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M109,-180C103,-180 97,-174 97,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M97,-156C97,-150 103,-144 109,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M139,-144C145,-144 151,-150 151,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M151,-168C151,-174 145,-180 139,-180"/>
+                    <polyline fill="none" stroke="none" points="139,-180 109,-180 "/>
+                    <path fill="none" stroke="none" d="M109,-180C103,-180 97,-174 97,-168"/>
+                    <polyline fill="none" stroke="none" points="97,-168 97,-156 "/>
+                    <path fill="none" stroke="none" d="M97,-156C97,-150 103,-144 109,-144"/>
+                    <polyline fill="none" stroke="none" points="109,-144 139,-144 "/>
+                    <path fill="none" stroke="none" d="M139,-144C145,-144 151,-150 151,-156"/>
+                    <polyline fill="none" stroke="none" points="151,-156 151,-168 "/>
+                    <path fill="none" stroke="none" d="M151,-168C151,-174 145,-180 139,-180"/>
+                    <text text-anchor="middle" x="124" y="-159" font-family="tahoma" font-size="10.00" fill="white">TreeSet</text>
+                  </a>
+                </g>
+                <!-- iSortedSet&#45;&gt;TreeSet -->
+                <g id="edge42" class="edge"><title>iSortedSet-&gt;TreeSet</title>
+                  <path fill="none" stroke="gray" d="M124,-215.831C124,-208.131 124,-198.974 124,-190.417"/>
+                  <polygon fill="gray" stroke="gray" points="127.5,-190.413 124,-180.413 120.5,-190.413 127.5,-190.413"/>
+                </g>
+                <!-- iIndexedSeq -->
+                <g id="node17" class="node"><title>iIndexedSeq</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/IndexedSeq.html" xlink:title="IndexedSeq">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="240,-108 196,-108 184,-96 184,-84 196,-72 240,-72 252,-84 252,-96 240,-108"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M196,-108C190,-108 184,-102 184,-96"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M184,-84C184,-78 190,-72 196,-72"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M240,-72C246,-72 252,-78 252,-84"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M252,-96C252,-102 246,-108 240,-108"/>
+                    <polyline fill="none" stroke="none" points="240,-108 196,-108 "/>
+                    <path fill="none" stroke="none" d="M196,-108C190,-108 184,-102 184,-96"/>
+                    <polyline fill="none" stroke="none" points="184,-96 184,-84 "/>
+                    <path fill="none" stroke="none" d="M184,-84C184,-78 190,-72 196,-72"/>
+                    <polyline fill="none" stroke="none" points="196,-72 240,-72 "/>
+                    <path fill="none" stroke="none" d="M240,-72C246,-72 252,-78 252,-84"/>
+                    <polyline fill="none" stroke="none" points="252,-84 252,-96 "/>
+                    <path fill="none" stroke="none" d="M252,-96C252,-102 246,-108 240,-108"/>
+                    <text text-anchor="middle" x="218" y="-87" font-family="tahoma" font-size="10.00" fill="white">IndexedSeq</text>
+                  </a>
+                </g>
+                <!-- iSeq&#45;&gt;iIndexedSeq -->
+                <g id="edge18" class="edge"><title>iSeq-&gt;iIndexedSeq</title>
+                  <path fill="none" stroke="gray" d="M298.747,-143.831C285.061,-134.707 268.309,-123.539 253.617,-113.745"/>
+                  <polygon fill="gray" stroke="gray" points="255.506,-110.798 245.244,-108.163 251.623,-116.622 255.506,-110.798"/>
+                </g>
+                <!-- iLinearSeq -->
+                <g id="node22" class="node"><title>iLinearSeq</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/LinearSeq.html" xlink:title="LinearSeq">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="452,-108 416,-108 404,-96 404,-84 416,-72 452,-72 464,-84 464,-96 452,-108"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M416,-108C410,-108 404,-102 404,-96"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M404,-84C404,-78 410,-72 416,-72"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M452,-72C458,-72 464,-78 464,-84"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M464,-96C464,-102 458,-108 452,-108"/>
+                    <polyline fill="none" stroke="none" points="452,-108 416,-108 "/>
+                    <path fill="none" stroke="none" d="M416,-108C410,-108 404,-102 404,-96"/>
+                    <polyline fill="none" stroke="none" points="404,-96 404,-84 "/>
+                    <path fill="none" stroke="none" d="M404,-84C404,-78 410,-72 416,-72"/>
+                    <polyline fill="none" stroke="none" points="416,-72 452,-72 "/>
+                    <path fill="none" stroke="none" d="M452,-72C458,-72 464,-78 464,-84"/>
+                    <polyline fill="none" stroke="none" points="464,-84 464,-96 "/>
+                    <path fill="none" stroke="none" d="M464,-96C464,-102 458,-108 452,-108"/>
+                    <text text-anchor="middle" x="434" y="-87" font-family="tahoma" font-size="10.00" fill="white">LinearSeq</text>
+                  </a>
+                </g>
+                <!-- iSeq&#45;&gt;iLinearSeq -->
+                <g id="edge28" class="edge"><title>iSeq-&gt;iLinearSeq</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M353.253,-143.831C366.939,-134.707 383.691,-123.539 398.383,-113.745"/>
+                  <polygon fill="gray" stroke="gray" points="400.377,-116.622 406.756,-108.163 396.494,-110.798 400.377,-116.622"/>
+                </g>
+                <!-- Vector -->
+                <g id="node18" class="node"><title>Vector</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/Vector.html" xlink:title="Vector">
+                    <polygon fill="steelblue" stroke="steelblue" points="61,-36 31,-36 19,-24 19,-12 31,-1.46056e-14 61,-6.71068e-15 73,-12 73,-24 61,-36"/>
+                    <path fill="steelblue" stroke="steelblue" d="M31,-36C25,-36 19,-30 19,-24"/>
+                    <path fill="steelblue" stroke="steelblue" d="M19,-12C19,-6 25,-1.61846e-14 31,-1.46056e-14"/>
+                    <path fill="steelblue" stroke="steelblue" d="M61,-6.71068e-15C67,-5.1317e-15 73,-6 73,-12"/>
+                    <path fill="steelblue" stroke="steelblue" d="M73,-24C73,-30 67,-36 61,-36"/>
+                    <polyline fill="none" stroke="none" points="61,-36 31,-36 "/>
+                    <path fill="none" stroke="none" d="M31,-36C25,-36 19,-30 19,-24"/>
+                    <polyline fill="none" stroke="none" points="19,-24 19,-12 "/>
+                    <path fill="none" stroke="none" d="M19,-12C19,-6 25,-1.61846e-14 31,-1.46056e-14"/>
+                    <polyline fill="none" stroke="none" points="31,-1.46056e-14 61,-6.71068e-15 "/>
+                    <path fill="none" stroke="none" d="M61,-6.71068e-15C67,-5.1317e-15 73,-6 73,-12"/>
+                    <polyline fill="none" stroke="none" points="73,-12 73,-24 "/>
+                    <path fill="none" stroke="none" d="M73,-24C73,-30 67,-36 61,-36"/>
+                    <text text-anchor="middle" x="46" y="-15" font-family="tahoma" font-size="10.00" fill="white">Vector</text>
+                  </a>
+                </g>
+                <!-- iIndexedSeq&#45;&gt;Vector -->
+                <g id="edge20" class="edge"><title>iIndexedSeq-&gt;Vector</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M183.85,-77.371C158.143,-67.6582 121.911,-53.5341 82.3178,-35.979"/>
+                  <polygon fill="gray" stroke="gray" points="83.5654,-32.7028 73.0078,-31.8146 80.7072,-39.0927 83.5654,-32.7028"/>
+                </g>
+                <!-- NumericRange -->
+                <g id="node19" class="node"><title>NumericRange</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/NumericRange.html" xlink:title="NumericRange">
+                    <polygon fill="steelblue" stroke="steelblue" points="161,-36 103,-36 91,-24 91,-12 103,-1.56839e-14 161,-5.63235e-15 173,-12 173,-24 161,-36"/>
+                    <path fill="steelblue" stroke="steelblue" d="M103,-36C97,-36 91,-30 91,-24"/>
+                    <path fill="steelblue" stroke="steelblue" d="M91,-12C91,-6 97,-1.67237e-14 103,-1.56839e-14"/>
+                    <path fill="steelblue" stroke="steelblue" d="M161,-5.63235e-15C167,-4.59253e-15 173,-6 173,-12"/>
+                    <path fill="steelblue" stroke="steelblue" d="M173,-24C173,-30 167,-36 161,-36"/>
+                    <polyline fill="none" stroke="none" points="161,-36 103,-36 "/>
+                    <path fill="none" stroke="none" d="M103,-36C97,-36 91,-30 91,-24"/>
+                    <polyline fill="none" stroke="none" points="91,-24 91,-12 "/>
+                    <path fill="none" stroke="none" d="M91,-12C91,-6 97,-1.67237e-14 103,-1.56839e-14"/>
+                    <polyline fill="none" stroke="none" points="103,-1.56839e-14 161,-5.63235e-15 "/>
+                    <path fill="none" stroke="none" d="M161,-5.63235e-15C167,-4.59253e-15 173,-6 173,-12"/>
+                    <polyline fill="none" stroke="none" points="173,-12 173,-24 "/>
+                    <path fill="none" stroke="none" d="M173,-24C173,-30 167,-36 161,-36"/>
+                    <text text-anchor="middle" x="132" y="-15" font-family="tahoma" font-size="10.00" fill="white">NumericRange</text>
+                  </a>
+                </g>
+                <!-- iIndexedSeq&#45;&gt;NumericRange -->
+                <g id="edge22" class="edge"><title>iIndexedSeq-&gt;NumericRange</title>
+                  <path fill="none" stroke="gray" d="M196.299,-71.8314C185.808,-63.0485 173.054,-52.3712 161.681,-42.8489"/>
+                  <polygon fill="gray" stroke="gray" points="163.609,-39.8986 153.694,-36.1628 159.115,-45.2659 163.609,-39.8986"/>
+                </g>
+                <!-- String -->
+                <g id="node20" class="node"><title>String</title>
+                  <a xlink:href="http://download.oracle.com/javase/6/docs/api/java/lang/String.html" xlink:title="String">
+                    <polygon fill="steelblue" stroke="steelblue" points="233,-36 203,-36 191,-24 191,-12 203,-1.46056e-14 233,-6.71068e-15 245,-12 245,-24 233,-36"/>
+                    <path fill="steelblue" stroke="steelblue" d="M203,-36C197,-36 191,-30 191,-24"/>
+                    <path fill="steelblue" stroke="steelblue" d="M191,-12C191,-6 197,-1.61846e-14 203,-1.46056e-14"/>
+                    <path fill="steelblue" stroke="steelblue" d="M233,-6.71068e-15C239,-5.1317e-15 245,-6 245,-12"/>
+                    <path fill="steelblue" stroke="steelblue" d="M245,-24C245,-30 239,-36 233,-36"/>
+                    <polyline fill="none" stroke="none" points="233,-36 203,-36 "/>
+                    <path fill="none" stroke="none" d="M203,-36C197,-36 191,-30 191,-24"/>
+                    <polyline fill="none" stroke="none" points="191,-24 191,-12 "/>
+                    <path fill="none" stroke="none" d="M191,-12C191,-6 197,-1.61846e-14 203,-1.46056e-14"/>
+                    <polyline fill="none" stroke="none" points="203,-1.46056e-14 233,-6.71068e-15 "/>
+                    <path fill="none" stroke="none" d="M233,-6.71068e-15C239,-5.1317e-15 245,-6 245,-12"/>
+                    <polyline fill="none" stroke="none" points="245,-12 245,-24 "/>
+                    <path fill="none" stroke="none" d="M245,-24C245,-30 239,-36 233,-36"/>
+                    <text text-anchor="middle" x="218" y="-15" font-family="tahoma" font-size="10.00" fill="white">String</text>
+                  </a>
+                </g>
+                <!-- iIndexedSeq&#45;&gt;String -->
+                <g id="edge26" class="edge"><title>iIndexedSeq-&gt;String</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/StringOps.html">
+                    <path fill="none" stroke="gray" stroke-dasharray="5,2" d="M218,-71.8314C218,-64.131 218,-54.9743 218,-46.4166"/>
+                    <polygon fill="gray" stroke="gray" points="221.5,-46.4132 218,-36.4133 214.5,-46.4133 221.5,-46.4132"/>
+                  </a>
+                </g>
+                <!-- Range -->
+                <g id="node21" class="node"><title>Range</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/Range.html" xlink:title="Range">
+                    <polygon fill="steelblue" stroke="steelblue" points="305,-36 275,-36 263,-24 263,-12 275,-1.46056e-14 305,-6.71068e-15 317,-12 317,-24 305,-36"/>
+                    <path fill="steelblue" stroke="steelblue" d="M275,-36C269,-36 263,-30 263,-24"/>
+                    <path fill="steelblue" stroke="steelblue" d="M263,-12C263,-6 269,-1.61846e-14 275,-1.46056e-14"/>
+                    <path fill="steelblue" stroke="steelblue" d="M305,-6.71068e-15C311,-5.1317e-15 317,-6 317,-12"/>
+                    <path fill="steelblue" stroke="steelblue" d="M317,-24C317,-30 311,-36 305,-36"/>
+                    <polyline fill="none" stroke="none" points="305,-36 275,-36 "/>
+                    <path fill="none" stroke="none" d="M275,-36C269,-36 263,-30 263,-24"/>
+                    <polyline fill="none" stroke="none" points="263,-24 263,-12 "/>
+                    <path fill="none" stroke="none" d="M263,-12C263,-6 269,-1.61846e-14 275,-1.46056e-14"/>
+                    <polyline fill="none" stroke="none" points="275,-1.46056e-14 305,-6.71068e-15 "/>
+                    <path fill="none" stroke="none" d="M305,-6.71068e-15C311,-5.1317e-15 317,-6 317,-12"/>
+                    <polyline fill="none" stroke="none" points="317,-12 317,-24 "/>
+                    <path fill="none" stroke="none" d="M317,-24C317,-30 311,-36 305,-36"/>
+                    <text text-anchor="middle" x="290" y="-15" font-family="tahoma" font-size="10.00" fill="white">Range</text>
+                  </a>
+                </g>
+                <!-- iIndexedSeq&#45;&gt;Range -->
+                <g id="edge24" class="edge"><title>iIndexedSeq-&gt;Range</title>
+                  <path fill="none" stroke="gray" d="M236.169,-71.8314C244.715,-63.2848 255.056,-52.9443 264.38,-43.6198"/>
+                  <polygon fill="gray" stroke="gray" points="266.991,-45.9592 271.587,-36.4133 262.041,-41.0095 266.991,-45.9592"/>
+                </g>
+                <!-- List -->
+                <g id="node23" class="node"><title>List</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/List.html" xlink:title="List">
+                    <polygon fill="steelblue" stroke="steelblue" points="377,-36 347,-36 335,-24 335,-12 347,-1.46056e-14 377,-6.71068e-15 389,-12 389,-24 377,-36"/>
+                    <path fill="steelblue" stroke="steelblue" d="M347,-36C341,-36 335,-30 335,-24"/>
+                    <path fill="steelblue" stroke="steelblue" d="M335,-12C335,-6 341,-1.61846e-14 347,-1.46056e-14"/>
+                    <path fill="steelblue" stroke="steelblue" d="M377,-6.71068e-15C383,-5.1317e-15 389,-6 389,-12"/>
+                    <path fill="steelblue" stroke="steelblue" d="M389,-24C389,-30 383,-36 377,-36"/>
+                    <polyline fill="none" stroke="none" points="377,-36 347,-36 "/>
+                    <path fill="none" stroke="none" d="M347,-36C341,-36 335,-30 335,-24"/>
+                    <polyline fill="none" stroke="none" points="335,-24 335,-12 "/>
+                    <path fill="none" stroke="none" d="M335,-12C335,-6 341,-1.61846e-14 347,-1.46056e-14"/>
+                    <polyline fill="none" stroke="none" points="347,-1.46056e-14 377,-6.71068e-15 "/>
+                    <path fill="none" stroke="none" d="M377,-6.71068e-15C383,-5.1317e-15 389,-6 389,-12"/>
+                    <polyline fill="none" stroke="none" points="389,-12 389,-24 "/>
+                    <path fill="none" stroke="none" d="M389,-24C389,-30 383,-36 377,-36"/>
+                    <text text-anchor="middle" x="362" y="-15" font-family="tahoma" font-size="10.00" fill="white">List</text>
+                  </a>
+                </g>
+                <!-- iLinearSeq&#45;&gt;List -->
+                <g id="edge29" class="edge"><title>iLinearSeq-&gt;List</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M415.831,-71.8314C407.285,-63.2848 396.944,-52.9443 387.62,-43.6198"/>
+                  <polygon fill="gray" stroke="gray" points="389.959,-41.0095 380.413,-36.4133 385.009,-45.9592 389.959,-41.0095"/>
+                </g>
+                <!-- Stream -->
+                <g id="node24" class="node"><title>Stream</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/Stream.html" xlink:title="Stream">
+                    <polygon fill="steelblue" stroke="steelblue" points="449,-36 419,-36 407,-24 407,-12 419,-1.46056e-14 449,-6.71068e-15 461,-12 461,-24 449,-36"/>
+                    <path fill="steelblue" stroke="steelblue" d="M419,-36C413,-36 407,-30 407,-24"/>
+                    <path fill="steelblue" stroke="steelblue" d="M407,-12C407,-6 413,-1.61846e-14 419,-1.46056e-14"/>
+                    <path fill="steelblue" stroke="steelblue" d="M449,-6.71068e-15C455,-5.1317e-15 461,-6 461,-12"/>
+                    <path fill="steelblue" stroke="steelblue" d="M461,-24C461,-30 455,-36 449,-36"/>
+                    <polyline fill="none" stroke="none" points="449,-36 419,-36 "/>
+                    <path fill="none" stroke="none" d="M419,-36C413,-36 407,-30 407,-24"/>
+                    <polyline fill="none" stroke="none" points="407,-24 407,-12 "/>
+                    <path fill="none" stroke="none" d="M407,-12C407,-6 413,-1.61846e-14 419,-1.46056e-14"/>
+                    <polyline fill="none" stroke="none" points="419,-1.46056e-14 449,-6.71068e-15 "/>
+                    <path fill="none" stroke="none" d="M449,-6.71068e-15C455,-5.1317e-15 461,-6 461,-12"/>
+                    <polyline fill="none" stroke="none" points="461,-12 461,-24 "/>
+                    <path fill="none" stroke="none" d="M461,-24C461,-30 455,-36 449,-36"/>
+                    <text text-anchor="middle" x="434" y="-15" font-family="tahoma" font-size="10.00" fill="white">Stream</text>
+                  </a>
+                </g>
+                <!-- iLinearSeq&#45;&gt;Stream -->
+                <g id="edge31" class="edge"><title>iLinearSeq-&gt;Stream</title>
+                  <path fill="none" stroke="gray" d="M434,-71.8314C434,-64.131 434,-54.9743 434,-46.4166"/>
+                  <polygon fill="gray" stroke="gray" points="437.5,-46.4132 434,-36.4133 430.5,-46.4133 437.5,-46.4132"/>
+                </g>
+                <!-- iQueue -->
+                <g id="node25" class="node"><title>iQueue</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/Queue.html" xlink:title="Queue">
+                    <polygon fill="steelblue" stroke="steelblue" points="521,-36 491,-36 479,-24 479,-12 491,-1.46056e-14 521,-6.71068e-15 533,-12 533,-24 521,-36"/>
+                    <path fill="steelblue" stroke="steelblue" d="M491,-36C485,-36 479,-30 479,-24"/>
+                    <path fill="steelblue" stroke="steelblue" d="M479,-12C479,-6 485,-1.61846e-14 491,-1.46056e-14"/>
+                    <path fill="steelblue" stroke="steelblue" d="M521,-6.71068e-15C527,-5.1317e-15 533,-6 533,-12"/>
+                    <path fill="steelblue" stroke="steelblue" d="M533,-24C533,-30 527,-36 521,-36"/>
+                    <polyline fill="none" stroke="none" points="521,-36 491,-36 "/>
+                    <path fill="none" stroke="none" d="M491,-36C485,-36 479,-30 479,-24"/>
+                    <polyline fill="none" stroke="none" points="479,-24 479,-12 "/>
+                    <path fill="none" stroke="none" d="M479,-12C479,-6 485,-1.61846e-14 491,-1.46056e-14"/>
+                    <polyline fill="none" stroke="none" points="491,-1.46056e-14 521,-6.71068e-15 "/>
+                    <path fill="none" stroke="none" d="M521,-6.71068e-15C527,-5.1317e-15 533,-6 533,-12"/>
+                    <polyline fill="none" stroke="none" points="533,-12 533,-24 "/>
+                    <path fill="none" stroke="none" d="M533,-24C533,-30 527,-36 521,-36"/>
+                    <text text-anchor="middle" x="506" y="-15" font-family="tahoma" font-size="10.00" fill="white">Queue</text>
+                  </a>
+                </g>
+                <!-- iLinearSeq&#45;&gt;iQueue -->
+                <g id="edge33" class="edge"><title>iLinearSeq-&gt;iQueue</title>
+                  <path fill="none" stroke="gray" d="M452.169,-71.8314C460.715,-63.2848 471.056,-52.9443 480.38,-43.6198"/>
+                  <polygon fill="gray" stroke="gray" points="482.991,-45.9592 487.587,-36.4133 478.041,-41.0095 482.991,-45.9592"/>
+                </g>
+                <!-- iStack -->
+                <g id="node26" class="node"><title>iStack</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/Stack.html" xlink:title="Stack">
+                    <polygon fill="steelblue" stroke="steelblue" points="593,-36 563,-36 551,-24 551,-12 563,-1.46056e-14 593,-6.71068e-15 605,-12 605,-24 593,-36"/>
+                    <path fill="steelblue" stroke="steelblue" d="M563,-36C557,-36 551,-30 551,-24"/>
+                    <path fill="steelblue" stroke="steelblue" d="M551,-12C551,-6 557,-1.61846e-14 563,-1.46056e-14"/>
+                    <path fill="steelblue" stroke="steelblue" d="M593,-6.71068e-15C599,-5.1317e-15 605,-6 605,-12"/>
+                    <path fill="steelblue" stroke="steelblue" d="M605,-24C605,-30 599,-36 593,-36"/>
+                    <polyline fill="none" stroke="none" points="593,-36 563,-36 "/>
+                    <path fill="none" stroke="none" d="M563,-36C557,-36 551,-30 551,-24"/>
+                    <polyline fill="none" stroke="none" points="551,-24 551,-12 "/>
+                    <path fill="none" stroke="none" d="M551,-12C551,-6 557,-1.61846e-14 563,-1.46056e-14"/>
+                    <polyline fill="none" stroke="none" points="563,-1.46056e-14 593,-6.71068e-15 "/>
+                    <path fill="none" stroke="none" d="M593,-6.71068e-15C599,-5.1317e-15 605,-6 605,-12"/>
+                    <polyline fill="none" stroke="none" points="605,-12 605,-24 "/>
+                    <path fill="none" stroke="none" d="M605,-24C605,-30 599,-36 593,-36"/>
+                    <text text-anchor="middle" x="578" y="-15" font-family="tahoma" font-size="10.00" fill="white">Stack</text>
+                  </a>
+                </g>
+                <!-- iLinearSeq&#45;&gt;iStack -->
+                <g id="edge35" class="edge"><title>iLinearSeq-&gt;iStack</title>
+                  <path fill="none" stroke="gray" d="M464.187,-74.9064C486.757,-63.6214 517.716,-48.1418 541.648,-36.1761"/>
+                  <polygon fill="gray" stroke="gray" points="543.392,-39.2174 550.771,-31.6147 540.261,-32.9564 543.392,-39.2174"/>
+                </g>
+                <!-- iHashMap -->
+                <g id="node28" class="node"><title>iHashMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/HashMap.html" xlink:title="HashMap">
+                    <polygon fill="steelblue" stroke="steelblue" points="398,-252 366,-252 354,-240 354,-228 366,-216 398,-216 410,-228 410,-240 398,-252"/>
+                    <path fill="steelblue" stroke="steelblue" d="M366,-252C360,-252 354,-246 354,-240"/>
+                    <path fill="steelblue" stroke="steelblue" d="M354,-228C354,-222 360,-216 366,-216"/>
+                    <path fill="steelblue" stroke="steelblue" d="M398,-216C404,-216 410,-222 410,-228"/>
+                    <path fill="steelblue" stroke="steelblue" d="M410,-240C410,-246 404,-252 398,-252"/>
+                    <polyline fill="none" stroke="none" points="398,-252 366,-252 "/>
+                    <path fill="none" stroke="none" d="M366,-252C360,-252 354,-246 354,-240"/>
+                    <polyline fill="none" stroke="none" points="354,-240 354,-228 "/>
+                    <path fill="none" stroke="none" d="M354,-228C354,-222 360,-216 366,-216"/>
+                    <polyline fill="none" stroke="none" points="366,-216 398,-216 "/>
+                    <path fill="none" stroke="none" d="M398,-216C404,-216 410,-222 410,-228"/>
+                    <polyline fill="none" stroke="none" points="410,-228 410,-240 "/>
+                    <path fill="none" stroke="none" d="M410,-240C410,-246 404,-252 398,-252"/>
+                    <text text-anchor="middle" x="382" y="-231" font-family="tahoma" font-size="10.00" fill="white">HashMap</text>
+                  </a>
+                </g>
+                <!-- iMap&#45;&gt;iHashMap -->
+                <g id="edge50" class="edge"><title>iMap-&gt;iHashMap</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M411.159,-287.831C406.804,-279.792 401.59,-270.167 396.783,-261.292"/>
+                  <polygon fill="gray" stroke="gray" points="399.814,-259.539 391.974,-252.413 393.659,-262.873 399.814,-259.539"/>
+                </g>
+                <!-- iSortedMap -->
+                <g id="node29" class="node"><title>iSortedMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/SortedMap.html" xlink:title="SortedMap">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="480,-252 440,-252 428,-240 428,-228 440,-216 480,-216 492,-228 492,-240 480,-252"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M440,-252C434,-252 428,-246 428,-240"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M428,-228C428,-222 434,-216 440,-216"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M480,-216C486,-216 492,-222 492,-228"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M492,-240C492,-246 486,-252 480,-252"/>
+                    <polyline fill="none" stroke="none" points="480,-252 440,-252 "/>
+                    <path fill="none" stroke="none" d="M440,-252C434,-252 428,-246 428,-240"/>
+                    <polyline fill="none" stroke="none" points="428,-240 428,-228 "/>
+                    <path fill="none" stroke="none" d="M428,-228C428,-222 434,-216 440,-216"/>
+                    <polyline fill="none" stroke="none" points="440,-216 480,-216 "/>
+                    <path fill="none" stroke="none" d="M480,-216C486,-216 492,-222 492,-228"/>
+                    <polyline fill="none" stroke="none" points="492,-228 492,-240 "/>
+                    <path fill="none" stroke="none" d="M492,-240C492,-246 486,-252 480,-252"/>
+                    <text text-anchor="middle" x="460" y="-231" font-family="tahoma" font-size="10.00" fill="white">SortedMap</text>
+                  </a>
+                </g>
+                <!-- iMap&#45;&gt;iSortedMap -->
+                <g id="edge52" class="edge"><title>iMap-&gt;iSortedMap</title>
+                  <path fill="none" stroke="gray" d="M430.841,-287.831C435.196,-279.792 440.41,-270.167 445.217,-261.292"/>
+                  <polygon fill="gray" stroke="gray" points="448.341,-262.873 450.026,-252.413 442.186,-259.539 448.341,-262.873"/>
+                </g>
+                <!-- iListMap -->
+                <g id="node31" class="node"><title>iListMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/ListMap.html" xlink:title="ListMap">
+                    <polygon fill="steelblue" stroke="steelblue" points="552,-252 522,-252 510,-240 510,-228 522,-216 552,-216 564,-228 564,-240 552,-252"/>
+                    <path fill="steelblue" stroke="steelblue" d="M522,-252C516,-252 510,-246 510,-240"/>
+                    <path fill="steelblue" stroke="steelblue" d="M510,-228C510,-222 516,-216 522,-216"/>
+                    <path fill="steelblue" stroke="steelblue" d="M552,-216C558,-216 564,-222 564,-228"/>
+                    <path fill="steelblue" stroke="steelblue" d="M564,-240C564,-246 558,-252 552,-252"/>
+                    <polyline fill="none" stroke="none" points="552,-252 522,-252 "/>
+                    <path fill="none" stroke="none" d="M522,-252C516,-252 510,-246 510,-240"/>
+                    <polyline fill="none" stroke="none" points="510,-240 510,-228 "/>
+                    <path fill="none" stroke="none" d="M510,-228C510,-222 516,-216 522,-216"/>
+                    <polyline fill="none" stroke="none" points="522,-216 552,-216 "/>
+                    <path fill="none" stroke="none" d="M552,-216C558,-216 564,-222 564,-228"/>
+                    <polyline fill="none" stroke="none" points="564,-228 564,-240 "/>
+                    <path fill="none" stroke="none" d="M564,-240C564,-246 558,-252 552,-252"/>
+                    <text text-anchor="middle" x="537" y="-231" font-family="tahoma" font-size="10.00" fill="white">ListMap</text>
+                  </a>
+                </g>
+                <!-- iMap&#45;&gt;iListMap -->
+                <g id="edge55" class="edge"><title>iMap-&gt;iListMap</title>
+                  <path fill="none" stroke="gray" d="M448.197,-289.119C464.05,-279.279 484.228,-266.755 501.342,-256.132"/>
+                  <polygon fill="gray" stroke="gray" points="503.323,-259.022 509.974,-250.775 499.631,-253.075 503.323,-259.022"/>
+                </g>
+                <!-- TreeMap -->
+                <g id="node30" class="node"><title>TreeMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/TreeMap.html" xlink:title="TreeMap">
+                    <polygon fill="steelblue" stroke="steelblue" points="475,-180 445,-180 433,-168 433,-156 445,-144 475,-144 487,-156 487,-168 475,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M445,-180C439,-180 433,-174 433,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M433,-156C433,-150 439,-144 445,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M475,-144C481,-144 487,-150 487,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M487,-168C487,-174 481,-180 475,-180"/>
+                    <polyline fill="none" stroke="none" points="475,-180 445,-180 "/>
+                    <path fill="none" stroke="none" d="M445,-180C439,-180 433,-174 433,-168"/>
+                    <polyline fill="none" stroke="none" points="433,-168 433,-156 "/>
+                    <path fill="none" stroke="none" d="M433,-156C433,-150 439,-144 445,-144"/>
+                    <polyline fill="none" stroke="none" points="445,-144 475,-144 "/>
+                    <path fill="none" stroke="none" d="M475,-144C481,-144 487,-150 487,-156"/>
+                    <polyline fill="none" stroke="none" points="487,-156 487,-168 "/>
+                    <path fill="none" stroke="none" d="M487,-168C487,-174 481,-180 475,-180"/>
+                    <text text-anchor="middle" x="460" y="-159" font-family="tahoma" font-size="10.00" fill="white">TreeMap</text>
+                  </a>
+                </g>
+                <!-- iSortedMap&#45;&gt;TreeMap -->
+                <g id="edge53" class="edge"><title>iSortedMap-&gt;TreeMap</title>
+                  <path fill="none" stroke="gray" d="M460,-215.831C460,-208.131 460,-198.974 460,-190.417"/>
+                  <polygon fill="gray" stroke="gray" points="463.5,-190.413 460,-180.413 456.5,-190.413 463.5,-190.413"/>
+                </g>
+              </g>
+            </svg>
+            <small>* (c) https://github.com/sirthias/scala-collections-charts</small>
+          </section>
+          <section>
+            <svg width="689pt" height="554pt" viewBox="0.00 0.00 1047.00 692.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g id="graph1" class="graph" transform="scale(0.944444 0.944444) rotate(0) translate(4 688)">
+                <title>scala.collection.mutable</title>
+                <!-- Level0 -->
+                <!-- Level1 -->
+                <!-- Level0&#45;&gt;Level1 -->
+                <!-- Level2 -->
+                <!-- Level1&#45;&gt;Level2 -->
+                <!-- Level3 -->
+                <!-- Level2&#45;&gt;Level3 -->
+                <!-- Level4 -->
+                <!-- Level3&#45;&gt;Level4 -->
+                <!-- Level5 -->
+                <!-- Level4&#45;&gt;Level5 -->
+                <!-- Level6 -->
+                <!-- Level5&#45;&gt;Level6 -->
+                <!-- Level7 -->
+                <!-- Level6&#45;&gt;Level7 -->
+                <!-- Level8 -->
+                <!-- Level7&#45;&gt;Level8 -->
+                <!-- Level9 -->
+                <!-- Level8&#45;&gt;Level9 -->
+                <!-- mTraversable -->
+                <g id="node12" class="node"><title>mTraversable</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/Traversable.html" xlink:title="Traversable">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="628,-684 584,-684 572,-672 572,-660 584,-648 628,-648 640,-660 640,-672 628,-684"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M584,-684C578,-684 572,-678 572,-672"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M572,-660C572,-654 578,-648 584,-648"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M628,-648C634,-648 640,-654 640,-660"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M640,-672C640,-678 634,-684 628,-684"/>
+                    <polyline fill="none" stroke="none" points="628,-684 584,-684 "/>
+                    <path fill="none" stroke="none" d="M584,-684C578,-684 572,-678 572,-672"/>
+                    <polyline fill="none" stroke="none" points="572,-672 572,-660 "/>
+                    <path fill="none" stroke="none" d="M572,-660C572,-654 578,-648 584,-648"/>
+                    <polyline fill="none" stroke="none" points="584,-648 628,-648 "/>
+                    <path fill="none" stroke="none" d="M628,-648C634,-648 640,-654 640,-660"/>
+                    <polyline fill="none" stroke="none" points="640,-660 640,-672 "/>
+                    <path fill="none" stroke="none" d="M640,-672C640,-678 634,-684 628,-684"/>
+                    <text text-anchor="middle" x="606" y="-663" font-family="tahoma" font-size="10.00" fill="white">Traversable</text>
+                  </a>
+                </g>
+                <!-- mIterable -->
+                <g id="node13" class="node"><title>mIterable</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/Iterable.html" xlink:title="Iterable">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="621,-612 591,-612 579,-600 579,-588 591,-576 621,-576 633,-588 633,-600 621,-612"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M591,-612C585,-612 579,-606 579,-600"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M579,-588C579,-582 585,-576 591,-576"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M621,-576C627,-576 633,-582 633,-588"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M633,-600C633,-606 627,-612 621,-612"/>
+                    <polyline fill="none" stroke="none" points="621,-612 591,-612 "/>
+                    <path fill="none" stroke="none" d="M591,-612C585,-612 579,-606 579,-600"/>
+                    <polyline fill="none" stroke="none" points="579,-600 579,-588 "/>
+                    <path fill="none" stroke="none" d="M579,-588C579,-582 585,-576 591,-576"/>
+                    <polyline fill="none" stroke="none" points="591,-576 621,-576 "/>
+                    <path fill="none" stroke="none" d="M621,-576C627,-576 633,-582 633,-588"/>
+                    <polyline fill="none" stroke="none" points="633,-588 633,-600 "/>
+                    <path fill="none" stroke="none" d="M633,-600C633,-606 627,-612 621,-612"/>
+                    <text text-anchor="middle" x="606" y="-591" font-family="tahoma" font-size="10.00" fill="white">Iterable</text>
+                  </a>
+                </g>
+                <!-- mTraversable&#45;&gt;mIterable -->
+                <g id="edge21" class="edge"><title>mTraversable-&gt;mIterable</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M606,-647.831C606,-640.131 606,-630.974 606,-622.417"/>
+                  <polygon fill="gray" stroke="gray" points="609.5,-622.413 606,-612.413 602.5,-622.413 609.5,-622.413"/>
+                </g>
+                <!-- mMap -->
+                <g id="node14" class="node"><title>mMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/Map.html" xlink:title="Map">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="370,-540 340,-540 328,-528 328,-516 340,-504 370,-504 382,-516 382,-528 370,-540"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M340,-540C334,-540 328,-534 328,-528"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M328,-516C328,-510 334,-504 340,-504"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M370,-504C376,-504 382,-510 382,-516"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M382,-528C382,-534 376,-540 370,-540"/>
+                    <polyline fill="none" stroke="none" points="370,-540 340,-540 "/>
+                    <path fill="none" stroke="none" d="M340,-540C334,-540 328,-534 328,-528"/>
+                    <polyline fill="none" stroke="none" points="328,-528 328,-516 "/>
+                    <path fill="none" stroke="none" d="M328,-516C328,-510 334,-504 340,-504"/>
+                    <polyline fill="none" stroke="none" points="340,-504 370,-504 "/>
+                    <path fill="none" stroke="none" d="M370,-504C376,-504 382,-510 382,-516"/>
+                    <polyline fill="none" stroke="none" points="382,-516 382,-528 "/>
+                    <path fill="none" stroke="none" d="M382,-528C382,-534 376,-540 370,-540"/>
+                    <text text-anchor="middle" x="355" y="-519" font-family="tahoma" font-size="10.00" fill="white">Map</text>
+                  </a>
+                </g>
+                <!-- mIterable&#45;&gt;mMap -->
+                <g id="edge75" class="edge"><title>mIterable-&gt;mMap</title>
+                  <path fill="none" stroke="gray" d="M578.661,-586.158C533.396,-573.173 442.839,-547.197 391.933,-532.594"/>
+                  <polygon fill="gray" stroke="gray" points="392.883,-529.226 382.306,-529.833 390.953,-535.954 392.883,-529.226"/>
+                </g>
+                <!-- mSeq -->
+                <g id="node24" class="node"><title>mSeq</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/Seq.html" xlink:title="Seq">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="621,-324 591,-324 579,-312 579,-300 591,-288 621,-288 633,-300 633,-312 621,-324"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M591,-324C585,-324 579,-318 579,-312"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M579,-300C579,-294 585,-288 591,-288"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M621,-288C627,-288 633,-294 633,-300"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M633,-312C633,-318 627,-324 621,-324"/>
+                    <polyline fill="none" stroke="none" points="621,-324 591,-324 "/>
+                    <path fill="none" stroke="none" d="M591,-324C585,-324 579,-318 579,-312"/>
+                    <polyline fill="none" stroke="none" points="579,-312 579,-300 "/>
+                    <path fill="none" stroke="none" d="M579,-300C579,-294 585,-288 591,-288"/>
+                    <polyline fill="none" stroke="none" points="591,-288 621,-288 "/>
+                    <path fill="none" stroke="none" d="M621,-288C627,-288 633,-294 633,-300"/>
+                    <polyline fill="none" stroke="none" points="633,-300 633,-312 "/>
+                    <path fill="none" stroke="none" d="M633,-312C633,-318 627,-324 621,-324"/>
+                    <text text-anchor="middle" x="606" y="-303" font-family="tahoma" font-size="10.00" fill="white">Seq</text>
+                  </a>
+                </g>
+                <!-- mIterable&#45;&gt;mSeq -->
+                <g id="edge22" class="edge"><title>mIterable-&gt;mSeq</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M606,-575.984C606,-527.294 606,-392.796 606,-334.057"/>
+                  <polygon fill="gray" stroke="gray" points="609.5,-334.009 606,-324.009 602.5,-334.009 609.5,-334.009"/>
+                </g>
+                <!-- mSet -->
+                <g id="node45" class="node"><title>mSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/Set.html" xlink:title="Set">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="803,-540 773,-540 761,-528 761,-516 773,-504 803,-504 815,-516 815,-528 803,-540"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M773,-540C767,-540 761,-534 761,-528"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M761,-516C761,-510 767,-504 773,-504"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M803,-504C809,-504 815,-510 815,-516"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M815,-528C815,-534 809,-540 803,-540"/>
+                    <polyline fill="none" stroke="none" points="803,-540 773,-540 "/>
+                    <path fill="none" stroke="none" d="M773,-540C767,-540 761,-534 761,-528"/>
+                    <polyline fill="none" stroke="none" points="761,-528 761,-516 "/>
+                    <path fill="none" stroke="none" d="M761,-516C761,-510 767,-504 773,-504"/>
+                    <polyline fill="none" stroke="none" points="773,-504 803,-504 "/>
+                    <path fill="none" stroke="none" d="M803,-504C809,-504 815,-510 815,-516"/>
+                    <polyline fill="none" stroke="none" points="815,-516 815,-528 "/>
+                    <path fill="none" stroke="none" d="M815,-528C815,-534 809,-540 803,-540"/>
+                    <text text-anchor="middle" x="788" y="-519" font-family="tahoma" font-size="10.00" fill="white">Set</text>
+                  </a>
+                </g>
+                <!-- mIterable&#45;&gt;mSet -->
+                <g id="edge61" class="edge"><title>mIterable-&gt;mSet</title>
+                  <path fill="none" stroke="gray" d="M633.247,-583.221C664.7,-570.778 716.573,-550.257 751.495,-536.442"/>
+                  <polygon fill="gray" stroke="gray" points="752.853,-539.668 760.864,-532.735 750.278,-533.159 752.853,-539.668"/>
+                </g>
+                <!-- mHashMap -->
+                <g id="node15" class="node"><title>mHashMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/HashMap.html" xlink:title="HashMap">
+                    <polygon fill="steelblue" stroke="steelblue" points="75,-468 43,-468 31,-456 31,-444 43,-432 75,-432 87,-444 87,-456 75,-468"/>
+                    <path fill="steelblue" stroke="steelblue" d="M43,-468C37,-468 31,-462 31,-456"/>
+                    <path fill="steelblue" stroke="steelblue" d="M31,-444C31,-438 37,-432 43,-432"/>
+                    <path fill="steelblue" stroke="steelblue" d="M75,-432C81,-432 87,-438 87,-444"/>
+                    <path fill="steelblue" stroke="steelblue" d="M87,-456C87,-462 81,-468 75,-468"/>
+                    <polyline fill="none" stroke="none" points="75,-468 43,-468 "/>
+                    <path fill="none" stroke="none" d="M43,-468C37,-468 31,-462 31,-456"/>
+                    <polyline fill="none" stroke="none" points="31,-456 31,-444 "/>
+                    <path fill="none" stroke="none" d="M31,-444C31,-438 37,-432 43,-432"/>
+                    <polyline fill="none" stroke="none" points="43,-432 75,-432 "/>
+                    <path fill="none" stroke="none" d="M75,-432C81,-432 87,-438 87,-444"/>
+                    <polyline fill="none" stroke="none" points="87,-444 87,-456 "/>
+                    <path fill="none" stroke="none" d="M87,-456C87,-462 81,-468 75,-468"/>
+                    <text text-anchor="middle" x="59" y="-447" font-family="tahoma" font-size="10.00" fill="white">HashMap</text>
+                  </a>
+                </g>
+                <!-- mMap&#45;&gt;mHashMap -->
+                <g id="edge77" class="edge"><title>mMap-&gt;mHashMap</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M327.857,-518.019C280.903,-510.738 181.788,-493.628 101,-468 99.5822,-467.55 98.1467,-467.07 96.7039,-466.566"/>
+                  <polygon fill="gray" stroke="gray" points="97.7731,-463.228 87.1815,-462.966 95.298,-469.776 97.7731,-463.228"/>
+                </g>
+                <!-- WeakHashMap -->
+                <g id="node16" class="node"><title>WeakHashMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/WeakHashMap.html" xlink:title="WeakHashMap">
+                    <polygon fill="steelblue" stroke="steelblue" points="118,-396 60,-396 48,-384 48,-372 60,-360 118,-360 130,-372 130,-384 118,-396"/>
+                    <path fill="steelblue" stroke="steelblue" d="M60,-396C54,-396 48,-390 48,-384"/>
+                    <path fill="steelblue" stroke="steelblue" d="M48,-372C48,-366 54,-360 60,-360"/>
+                    <path fill="steelblue" stroke="steelblue" d="M118,-360C124,-360 130,-366 130,-372"/>
+                    <path fill="steelblue" stroke="steelblue" d="M130,-384C130,-390 124,-396 118,-396"/>
+                    <polyline fill="none" stroke="none" points="118,-396 60,-396 "/>
+                    <path fill="none" stroke="none" d="M60,-396C54,-396 48,-390 48,-384"/>
+                    <polyline fill="none" stroke="none" points="48,-384 48,-372 "/>
+                    <path fill="none" stroke="none" d="M48,-372C48,-366 54,-360 60,-360"/>
+                    <polyline fill="none" stroke="none" points="60,-360 118,-360 "/>
+                    <path fill="none" stroke="none" d="M118,-360C124,-360 130,-366 130,-372"/>
+                    <polyline fill="none" stroke="none" points="130,-372 130,-384 "/>
+                    <path fill="none" stroke="none" d="M130,-384C130,-390 124,-396 118,-396"/>
+                    <text text-anchor="middle" x="89" y="-375" font-family="tahoma" font-size="10.00" fill="white">WeakHashMap</text>
+                  </a>
+                </g>
+                <!-- mMap&#45;&gt;WeakHashMap -->
+                <g id="edge79" class="edge"><title>mMap-&gt;WeakHashMap</title>
+                  <path fill="none" stroke="gray" d="M327.989,-516.856C293.904,-509.572 234.272,-494.142 189,-468 159.358,-450.884 130.883,-423.871 111.953,-403.901"/>
+                  <polygon fill="gray" stroke="gray" points="114.312,-401.299 104.939,-396.361 109.187,-406.066 114.312,-401.299"/>
+                </g>
+                <!-- OpenHashMap -->
+                <g id="node17" class="node"><title>OpenHashMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/OpenHashMap.html" xlink:title="OpenHashMap">
+                    <polygon fill="steelblue" stroke="steelblue" points="216,-396 160,-396 148,-384 148,-372 160,-360 216,-360 228,-372 228,-384 216,-396"/>
+                    <path fill="steelblue" stroke="steelblue" d="M160,-396C154,-396 148,-390 148,-384"/>
+                    <path fill="steelblue" stroke="steelblue" d="M148,-372C148,-366 154,-360 160,-360"/>
+                    <path fill="steelblue" stroke="steelblue" d="M216,-360C222,-360 228,-366 228,-372"/>
+                    <path fill="steelblue" stroke="steelblue" d="M228,-384C228,-390 222,-396 216,-396"/>
+                    <polyline fill="none" stroke="none" points="216,-396 160,-396 "/>
+                    <path fill="none" stroke="none" d="M160,-396C154,-396 148,-390 148,-384"/>
+                    <polyline fill="none" stroke="none" points="148,-384 148,-372 "/>
+                    <path fill="none" stroke="none" d="M148,-372C148,-366 154,-360 160,-360"/>
+                    <polyline fill="none" stroke="none" points="160,-360 216,-360 "/>
+                    <path fill="none" stroke="none" d="M216,-360C222,-360 228,-366 228,-372"/>
+                    <polyline fill="none" stroke="none" points="228,-372 228,-384 "/>
+                    <path fill="none" stroke="none" d="M228,-384C228,-390 222,-396 216,-396"/>
+                    <text text-anchor="middle" x="188" y="-375" font-family="tahoma" font-size="10.00" fill="white">OpenHashMap</text>
+                  </a>
+                </g>
+                <!-- mMap&#45;&gt;OpenHashMap -->
+                <g id="edge81" class="edge"><title>mMap-&gt;OpenHashMap</title>
+                  <path fill="none" stroke="gray" d="M327.999,-519.335C295.494,-514.664 241.485,-501.989 211,-468 195.918,-451.185 190.454,-425.829 188.599,-406.311"/>
+                  <polygon fill="gray" stroke="gray" points="192.079,-405.897 187.902,-396.16 185.095,-406.377 192.079,-405.897"/>
+                </g>
+                <!-- LinkedHashMap -->
+                <g id="node18" class="node"><title>LinkedHashMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/LinkedHashMap.html" xlink:title="LinkedHashMap">
+                    <polygon fill="steelblue" stroke="steelblue" points="294,-468 232,-468 220,-456 220,-444 232,-432 294,-432 306,-444 306,-456 294,-468"/>
+                    <path fill="steelblue" stroke="steelblue" d="M232,-468C226,-468 220,-462 220,-456"/>
+                    <path fill="steelblue" stroke="steelblue" d="M220,-444C220,-438 226,-432 232,-432"/>
+                    <path fill="steelblue" stroke="steelblue" d="M294,-432C300,-432 306,-438 306,-444"/>
+                    <path fill="steelblue" stroke="steelblue" d="M306,-456C306,-462 300,-468 294,-468"/>
+                    <polyline fill="none" stroke="none" points="294,-468 232,-468 "/>
+                    <path fill="none" stroke="none" d="M232,-468C226,-468 220,-462 220,-456"/>
+                    <polyline fill="none" stroke="none" points="220,-456 220,-444 "/>
+                    <path fill="none" stroke="none" d="M220,-444C220,-438 226,-432 232,-432"/>
+                    <polyline fill="none" stroke="none" points="232,-432 294,-432 "/>
+                    <path fill="none" stroke="none" d="M294,-432C300,-432 306,-438 306,-444"/>
+                    <polyline fill="none" stroke="none" points="306,-444 306,-456 "/>
+                    <path fill="none" stroke="none" d="M306,-456C306,-462 300,-468 294,-468"/>
+                    <text text-anchor="middle" x="263" y="-447" font-family="tahoma" font-size="10.00" fill="white">LinkedHashMap</text>
+                  </a>
+                </g>
+                <!-- mMap&#45;&gt;LinkedHashMap -->
+                <g id="edge83" class="edge"><title>mMap-&gt;LinkedHashMap</title>
+                  <path fill="none" stroke="gray" d="M331.785,-503.831C320.453,-494.963 306.654,-484.164 294.397,-474.572"/>
+                  <polygon fill="gray" stroke="gray" points="296.24,-471.57 286.208,-468.163 291.926,-477.082 296.24,-471.57"/>
+                </g>
+                <!-- ObservableMap -->
+                <g id="node19" class="node"><title>ObservableMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/ObservableMap.html" xlink:title="ObservableMap">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="318,-396 258,-396 246,-384 246,-372 258,-360 318,-360 330,-372 330,-384 318,-396"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M258,-396C252,-396 246,-390 246,-384"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M246,-372C246,-366 252,-360 258,-360"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M318,-360C324,-360 330,-366 330,-372"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M330,-384C330,-390 324,-396 318,-396"/>
+                    <polyline fill="none" stroke="none" points="318,-396 258,-396 "/>
+                    <path fill="none" stroke="none" d="M258,-396C252,-396 246,-390 246,-384"/>
+                    <polyline fill="none" stroke="none" points="246,-384 246,-372 "/>
+                    <path fill="none" stroke="none" d="M246,-372C246,-366 252,-360 258,-360"/>
+                    <polyline fill="none" stroke="none" points="258,-360 318,-360 "/>
+                    <path fill="none" stroke="none" d="M318,-360C324,-360 330,-366 330,-372"/>
+                    <polyline fill="none" stroke="none" points="330,-372 330,-384 "/>
+                    <path fill="none" stroke="none" d="M330,-384C330,-390 324,-396 318,-396"/>
+                    <text text-anchor="middle" x="288" y="-375" font-family="tahoma" font-size="10.00" fill="white">ObservableMap</text>
+                  </a>
+                </g>
+                <!-- mMap&#45;&gt;ObservableMap -->
+                <g id="edge89" class="edge"><title>mMap-&gt;ObservableMap</title>
+                  <path fill="none" stroke="gray" d="M347.27,-503.961C339.382,-485.712 326.676,-456.741 315,-432 310.905,-423.322 306.286,-413.945 302.041,-405.479"/>
+                  <polygon fill="gray" stroke="gray" points="305.086,-403.744 297.456,-396.393 298.837,-406.897 305.086,-403.744"/>
+                </g>
+                <!-- SynchronizedMap -->
+                <g id="node20" class="node"><title>SynchronizedMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/SynchronizedMap.html" xlink:title="SynchronizedMap">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="430,-396 360,-396 348,-384 348,-372 360,-360 430,-360 442,-372 442,-384 430,-396"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M360,-396C354,-396 348,-390 348,-384"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M348,-372C348,-366 354,-360 360,-360"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M430,-360C436,-360 442,-366 442,-372"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M442,-384C442,-390 436,-396 430,-396"/>
+                    <polyline fill="none" stroke="none" points="430,-396 360,-396 "/>
+                    <path fill="none" stroke="none" d="M360,-396C354,-396 348,-390 348,-384"/>
+                    <polyline fill="none" stroke="none" points="348,-384 348,-372 "/>
+                    <path fill="none" stroke="none" d="M348,-372C348,-366 354,-360 360,-360"/>
+                    <polyline fill="none" stroke="none" points="360,-360 430,-360 "/>
+                    <path fill="none" stroke="none" d="M430,-360C436,-360 442,-366 442,-372"/>
+                    <polyline fill="none" stroke="none" points="442,-372 442,-384 "/>
+                    <path fill="none" stroke="none" d="M442,-384C442,-390 436,-396 430,-396"/>
+                    <text text-anchor="middle" x="395" y="-375" font-family="tahoma" font-size="10.00" fill="white">SynchronizedMap</text>
+                  </a>
+                </g>
+                <!-- mMap&#45;&gt;SynchronizedMap -->
+                <g id="edge91" class="edge"><title>mMap-&gt;SynchronizedMap</title>
+                  <path fill="none" stroke="gray" d="M360.066,-503.762C366.919,-479.093 379.206,-434.86 387.23,-405.973"/>
+                  <polygon fill="gray" stroke="gray" points="390.671,-406.662 389.975,-396.09 383.926,-404.788 390.671,-406.662"/>
+                </g>
+                <!-- ImmutableMapAdaptor -->
+                <g id="node21" class="node"><title>ImmutableMapAdaptor</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/ImmutableMapAdaptor.html" xlink:title="ImmutableMapAdaptor">
+                    <polygon fill="steelblue" stroke="steelblue" points="566,-396 472,-396 460,-384 460,-372 472,-360 566,-360 578,-372 578,-384 566,-396"/>
+                    <path fill="steelblue" stroke="steelblue" d="M472,-396C466,-396 460,-390 460,-384"/>
+                    <path fill="steelblue" stroke="steelblue" d="M460,-372C460,-366 466,-360 472,-360"/>
+                    <path fill="steelblue" stroke="steelblue" d="M566,-360C572,-360 578,-366 578,-372"/>
+                    <path fill="steelblue" stroke="steelblue" d="M578,-384C578,-390 572,-396 566,-396"/>
+                    <polyline fill="none" stroke="none" points="566,-396 472,-396 "/>
+                    <path fill="none" stroke="none" d="M472,-396C466,-396 460,-390 460,-384"/>
+                    <polyline fill="none" stroke="none" points="460,-384 460,-372 "/>
+                    <path fill="none" stroke="none" d="M460,-372C460,-366 466,-360 472,-360"/>
+                    <polyline fill="none" stroke="none" points="472,-360 566,-360 "/>
+                    <path fill="none" stroke="none" d="M566,-360C572,-360 578,-366 578,-372"/>
+                    <polyline fill="none" stroke="none" points="578,-372 578,-384 "/>
+                    <path fill="none" stroke="none" d="M578,-384C578,-390 572,-396 566,-396"/>
+                    <text text-anchor="middle" x="519" y="-375" font-family="tahoma" font-size="10.00" fill="white">ImmutableMapAdaptor</text>
+                  </a>
+                </g>
+                <!-- mMap&#45;&gt;ImmutableMapAdaptor -->
+                <g id="edge93" class="edge"><title>mMap-&gt;ImmutableMapAdaptor</title>
+                  <path fill="none" stroke="gray" d="M368.272,-503.682C382.787,-484.424 407.413,-453.935 433,-432 446.19,-420.692 461.969,-410.089 476.39,-401.322"/>
+                  <polygon fill="gray" stroke="gray" points="478.349,-404.229 485.157,-396.111 474.773,-398.212 478.349,-404.229"/>
+                </g>
+                <!-- mListMap -->
+                <g id="node22" class="node"><title>mListMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/ListMap.html" xlink:title="ListMap">
+                    <polygon fill="steelblue" stroke="steelblue" points="484,-468 454,-468 442,-456 442,-444 454,-432 484,-432 496,-444 496,-456 484,-468"/>
+                    <path fill="steelblue" stroke="steelblue" d="M454,-468C448,-468 442,-462 442,-456"/>
+                    <path fill="steelblue" stroke="steelblue" d="M442,-444C442,-438 448,-432 454,-432"/>
+                    <path fill="steelblue" stroke="steelblue" d="M484,-432C490,-432 496,-438 496,-444"/>
+                    <path fill="steelblue" stroke="steelblue" d="M496,-456C496,-462 490,-468 484,-468"/>
+                    <polyline fill="none" stroke="none" points="484,-468 454,-468 "/>
+                    <path fill="none" stroke="none" d="M454,-468C448,-468 442,-462 442,-456"/>
+                    <polyline fill="none" stroke="none" points="442,-456 442,-444 "/>
+                    <path fill="none" stroke="none" d="M442,-444C442,-438 448,-432 454,-432"/>
+                    <polyline fill="none" stroke="none" points="454,-432 484,-432 "/>
+                    <path fill="none" stroke="none" d="M484,-432C490,-432 496,-438 496,-444"/>
+                    <polyline fill="none" stroke="none" points="496,-444 496,-456 "/>
+                    <path fill="none" stroke="none" d="M496,-456C496,-462 490,-468 484,-468"/>
+                    <text text-anchor="middle" x="469" y="-447" font-family="tahoma" font-size="10.00" fill="white">ListMap</text>
+                  </a>
+                </g>
+                <!-- mMap&#45;&gt;mListMap -->
+                <g id="edge85" class="edge"><title>mMap-&gt;mListMap</title>
+                  <path fill="none" stroke="gray" d="M382.016,-504.937C397.238,-495.323 416.449,-483.19 432.942,-472.774"/>
+                  <polygon fill="gray" stroke="gray" points="435.197,-475.489 441.782,-467.19 431.459,-469.571 435.197,-475.489"/>
+                </g>
+                <!-- MultiMap -->
+                <g id="node23" class="node"><title>MultiMap</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/MultiMap.html" xlink:title="MultiMap">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="558,-468 526,-468 514,-456 514,-444 526,-432 558,-432 570,-444 570,-456 558,-468"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M526,-468C520,-468 514,-462 514,-456"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M514,-444C514,-438 520,-432 526,-432"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M558,-432C564,-432 570,-438 570,-444"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M570,-456C570,-462 564,-468 558,-468"/>
+                    <polyline fill="none" stroke="none" points="558,-468 526,-468 "/>
+                    <path fill="none" stroke="none" d="M526,-468C520,-468 514,-462 514,-456"/>
+                    <polyline fill="none" stroke="none" points="514,-456 514,-444 "/>
+                    <path fill="none" stroke="none" d="M514,-444C514,-438 520,-432 526,-432"/>
+                    <polyline fill="none" stroke="none" points="526,-432 558,-432 "/>
+                    <path fill="none" stroke="none" d="M558,-432C564,-432 570,-438 570,-444"/>
+                    <polyline fill="none" stroke="none" points="570,-444 570,-456 "/>
+                    <path fill="none" stroke="none" d="M570,-456C570,-462 564,-468 558,-468"/>
+                    <text text-anchor="middle" x="542" y="-447" font-family="tahoma" font-size="10.00" fill="white">MultiMap</text>
+                  </a>
+                </g>
+                <!-- mMap&#45;&gt;MultiMap -->
+                <g id="edge87" class="edge"><title>mMap-&gt;MultiMap</title>
+                  <path fill="none" stroke="gray" d="M382.16,-513.2C410.633,-503.764 456.774,-487.877 504.598,-467.972"/>
+                  <polygon fill="gray" stroke="gray" points="506.002,-471.179 513.861,-464.074 503.287,-464.727 506.002,-471.179"/>
+                </g>
+                <!-- mIndexedSeq -->
+                <g id="node25" class="node"><title>mIndexedSeq</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/IndexedSeq.html" xlink:title="IndexedSeq">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="249,-252 205,-252 193,-240 193,-228 205,-216 249,-216 261,-228 261,-240 249,-252"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M205,-252C199,-252 193,-246 193,-240"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M193,-228C193,-222 199,-216 205,-216"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M249,-216C255,-216 261,-222 261,-228"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M261,-240C261,-246 255,-252 249,-252"/>
+                    <polyline fill="none" stroke="none" points="249,-252 205,-252 "/>
+                    <path fill="none" stroke="none" d="M205,-252C199,-252 193,-246 193,-240"/>
+                    <polyline fill="none" stroke="none" points="193,-240 193,-228 "/>
+                    <path fill="none" stroke="none" d="M193,-228C193,-222 199,-216 205,-216"/>
+                    <polyline fill="none" stroke="none" points="205,-216 249,-216 "/>
+                    <path fill="none" stroke="none" d="M249,-216C255,-216 261,-222 261,-228"/>
+                    <polyline fill="none" stroke="none" points="261,-228 261,-240 "/>
+                    <path fill="none" stroke="none" d="M261,-240C261,-246 255,-252 249,-252"/>
+                    <text text-anchor="middle" x="227" y="-231" font-family="tahoma" font-size="10.00" fill="white">IndexedSeq</text>
+                  </a>
+                </g>
+                <!-- mSeq&#45;&gt;mIndexedSeq -->
+                <g id="edge23" class="edge"><title>mSeq-&gt;mIndexedSeq</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M578.743,-300.822C514.013,-288.525 350.553,-257.472 271.361,-242.427"/>
+                  <polygon fill="gray" stroke="gray" points="271.698,-238.929 261.221,-240.501 270.392,-245.806 271.698,-238.929"/>
+                </g>
+                <!-- Buffer -->
+                <g id="node30" class="node"><title>Buffer</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/Buffer.html" xlink:title="Buffer">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="431,-252 401,-252 389,-240 389,-228 401,-216 431,-216 443,-228 443,-240 431,-252"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M401,-252C395,-252 389,-246 389,-240"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M389,-228C389,-222 395,-216 401,-216"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M431,-216C437,-216 443,-222 443,-228"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M443,-240C443,-246 437,-252 431,-252"/>
+                    <polyline fill="none" stroke="none" points="431,-252 401,-252 "/>
+                    <path fill="none" stroke="none" d="M401,-252C395,-252 389,-246 389,-240"/>
+                    <polyline fill="none" stroke="none" points="389,-240 389,-228 "/>
+                    <path fill="none" stroke="none" d="M389,-228C389,-222 395,-216 401,-216"/>
+                    <polyline fill="none" stroke="none" points="401,-216 431,-216 "/>
+                    <path fill="none" stroke="none" d="M431,-216C437,-216 443,-222 443,-228"/>
+                    <polyline fill="none" stroke="none" points="443,-228 443,-240 "/>
+                    <path fill="none" stroke="none" d="M443,-240C443,-246 437,-252 431,-252"/>
+                    <text text-anchor="middle" x="416" y="-231" font-family="tahoma" font-size="10.00" fill="white">Buffer</text>
+                  </a>
+                </g>
+                <!-- mSeq&#45;&gt;Buffer -->
+                <g id="edge43" class="edge"><title>mSeq-&gt;Buffer</title>
+                  <path fill="none" stroke="gray" d="M578.778,-295.684C545.622,-283.12 489.482,-261.846 452.575,-247.86"/>
+                  <polygon fill="gray" stroke="gray" points="453.763,-244.567 443.172,-244.297 451.283,-251.113 453.763,-244.567"/>
+                </g>
+                <!-- mStack -->
+                <g id="node34" class="node"><title>mStack</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/Stack.html" xlink:title="Stack">
+                    <polygon fill="steelblue" stroke="steelblue" points="562,-180 532,-180 520,-168 520,-156 532,-144 562,-144 574,-156 574,-168 562,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M532,-180C526,-180 520,-174 520,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M520,-156C520,-150 526,-144 532,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M562,-144C568,-144 574,-150 574,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M574,-168C574,-174 568,-180 562,-180"/>
+                    <polyline fill="none" stroke="none" points="562,-180 532,-180 "/>
+                    <path fill="none" stroke="none" d="M532,-180C526,-180 520,-174 520,-168"/>
+                    <polyline fill="none" stroke="none" points="520,-168 520,-156 "/>
+                    <path fill="none" stroke="none" d="M520,-156C520,-150 526,-144 532,-144"/>
+                    <polyline fill="none" stroke="none" points="532,-144 562,-144 "/>
+                    <path fill="none" stroke="none" d="M562,-144C568,-144 574,-150 574,-156"/>
+                    <polyline fill="none" stroke="none" points="574,-156 574,-168 "/>
+                    <path fill="none" stroke="none" d="M574,-168C574,-174 568,-180 562,-180"/>
+                    <text text-anchor="middle" x="547" y="-159" font-family="tahoma" font-size="10.00" fill="white">Stack</text>
+                  </a>
+                </g>
+                <!-- mSeq&#45;&gt;mStack -->
+                <g id="edge53" class="edge"><title>mSeq-&gt;mStack</title>
+                  <path fill="none" stroke="gray" d="M598.528,-287.762C588.376,-262.985 570.138,-218.471 558.306,-189.594"/>
+                  <polygon fill="gray" stroke="gray" points="561.442,-188.016 554.412,-180.09 554.964,-190.67 561.442,-188.016"/>
+                </g>
+                <!-- ArrayStack -->
+                <g id="node36" class="node"><title>ArrayStack</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/ArrayStack.html" xlink:title="ArrayStack">
+                    <polygon fill="steelblue" stroke="steelblue" points="646,-180 604,-180 592,-168 592,-156 604,-144 646,-144 658,-156 658,-168 646,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M604,-180C598,-180 592,-174 592,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M592,-156C592,-150 598,-144 604,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M646,-144C652,-144 658,-150 658,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M658,-168C658,-174 652,-180 646,-180"/>
+                    <polyline fill="none" stroke="none" points="646,-180 604,-180 "/>
+                    <path fill="none" stroke="none" d="M604,-180C598,-180 592,-174 592,-168"/>
+                    <polyline fill="none" stroke="none" points="592,-168 592,-156 "/>
+                    <path fill="none" stroke="none" d="M592,-156C592,-150 598,-144 604,-144"/>
+                    <polyline fill="none" stroke="none" points="604,-144 646,-144 "/>
+                    <path fill="none" stroke="none" d="M646,-144C652,-144 658,-150 658,-156"/>
+                    <polyline fill="none" stroke="none" points="658,-156 658,-168 "/>
+                    <path fill="none" stroke="none" d="M658,-168C658,-174 652,-180 646,-180"/>
+                    <text text-anchor="middle" x="625" y="-159" font-family="tahoma" font-size="10.00" fill="white">ArrayStack</text>
+                  </a>
+                </g>
+                <!-- mSeq&#45;&gt;ArrayStack -->
+                <g id="edge56" class="edge"><title>mSeq-&gt;ArrayStack</title>
+                  <path fill="none" stroke="gray" d="M608.406,-287.762C611.647,-263.201 617.447,-219.247 621.259,-190.354"/>
+                  <polygon fill="gray" stroke="gray" points="624.775,-190.462 622.613,-180.09 617.835,-189.546 624.775,-190.462"/>
+                </g>
+                <!-- PriorityQueue -->
+                <g id="node37" class="node"><title>PriorityQueue</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/PriorityQueue.html" xlink:title="PriorityQueue">
+                    <polygon fill="steelblue" stroke="steelblue" points="742,-180 688,-180 676,-168 676,-156 688,-144 742,-144 754,-156 754,-168 742,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M688,-180C682,-180 676,-174 676,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M676,-156C676,-150 682,-144 688,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M742,-144C748,-144 754,-150 754,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M754,-168C754,-174 748,-180 742,-180"/>
+                    <polyline fill="none" stroke="none" points="742,-180 688,-180 "/>
+                    <path fill="none" stroke="none" d="M688,-180C682,-180 676,-174 676,-168"/>
+                    <polyline fill="none" stroke="none" points="676,-168 676,-156 "/>
+                    <path fill="none" stroke="none" d="M676,-156C676,-150 682,-144 688,-144"/>
+                    <polyline fill="none" stroke="none" points="688,-144 742,-144 "/>
+                    <path fill="none" stroke="none" d="M742,-144C748,-144 754,-150 754,-156"/>
+                    <polyline fill="none" stroke="none" points="754,-156 754,-168 "/>
+                    <path fill="none" stroke="none" d="M754,-168C754,-174 748,-180 742,-180"/>
+                    <text text-anchor="middle" x="715" y="-159" font-family="tahoma" font-size="10.00" fill="white">PriorityQueue</text>
+                  </a>
+                </g>
+                <!-- mSeq&#45;&gt;PriorityQueue -->
+                <g id="edge58" class="edge"><title>mSeq-&gt;PriorityQueue</title>
+                  <path fill="none" stroke="gray" d="M619.805,-287.762C638.888,-262.552 673.436,-216.91 695.247,-188.095"/>
+                  <polygon fill="gray" stroke="gray" points="698.062,-190.175 701.307,-180.09 692.481,-185.951 698.062,-190.175"/>
+                </g>
+                <!-- mLinearSeq -->
+                <g id="node39" class="node"><title>mLinearSeq</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/immutable/LinearSeq.html" xlink:title="LinearSeq">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="876,-252 840,-252 828,-240 828,-228 840,-216 876,-216 888,-228 888,-240 876,-252"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M840,-252C834,-252 828,-246 828,-240"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M828,-228C828,-222 834,-216 840,-216"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M876,-216C882,-216 888,-222 888,-228"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M888,-240C888,-246 882,-252 876,-252"/>
+                    <polyline fill="none" stroke="none" points="876,-252 840,-252 "/>
+                    <path fill="none" stroke="none" d="M840,-252C834,-252 828,-246 828,-240"/>
+                    <polyline fill="none" stroke="none" points="828,-240 828,-228 "/>
+                    <path fill="none" stroke="none" d="M828,-228C828,-222 834,-216 840,-216"/>
+                    <polyline fill="none" stroke="none" points="840,-216 876,-216 "/>
+                    <path fill="none" stroke="none" d="M876,-216C882,-216 888,-222 888,-228"/>
+                    <polyline fill="none" stroke="none" points="888,-228 888,-240 "/>
+                    <path fill="none" stroke="none" d="M888,-240C888,-246 882,-252 876,-252"/>
+                    <text text-anchor="middle" x="858" y="-231" font-family="tahoma" font-size="10.00" fill="white">LinearSeq</text>
+                  </a>
+                </g>
+                <!-- mSeq&#45;&gt;mLinearSeq -->
+                <g id="edge32" class="edge"><title>mSeq-&gt;mLinearSeq</title>
+                  <path fill="none" stroke="gray" d="M633.448,-298.158C678.056,-285.413 766.477,-260.15 818.056,-245.413"/>
+                  <polygon fill="gray" stroke="gray" points="819.202,-248.725 827.856,-242.613 817.279,-241.994 819.202,-248.725"/>
+                </g>
+                <!-- ArrayBuffer -->
+                <g id="node26" class="node"><title>ArrayBuffer</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/ArrayBuffer.html" xlink:title="ArrayBuffer">
+                    <polygon fill="steelblue" stroke="steelblue" points="338,-180 294,-180 282,-168 282,-156 294,-144 338,-144 350,-156 350,-168 338,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M294,-180C288,-180 282,-174 282,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M282,-156C282,-150 288,-144 294,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M338,-144C344,-144 350,-150 350,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M350,-168C350,-174 344,-180 338,-180"/>
+                    <polyline fill="none" stroke="none" points="338,-180 294,-180 "/>
+                    <path fill="none" stroke="none" d="M294,-180C288,-180 282,-174 282,-168"/>
+                    <polyline fill="none" stroke="none" points="282,-168 282,-156 "/>
+                    <path fill="none" stroke="none" d="M282,-156C282,-150 288,-144 294,-144"/>
+                    <polyline fill="none" stroke="none" points="294,-144 338,-144 "/>
+                    <path fill="none" stroke="none" d="M338,-144C344,-144 350,-150 350,-156"/>
+                    <polyline fill="none" stroke="none" points="350,-156 350,-168 "/>
+                    <path fill="none" stroke="none" d="M350,-168C350,-174 344,-180 338,-180"/>
+                    <text text-anchor="middle" x="316" y="-159" font-family="tahoma" font-size="10.00" fill="white">ArrayBuffer</text>
+                  </a>
+                </g>
+                <!-- mIndexedSeq&#45;&gt;ArrayBuffer -->
+                <g id="edge24" class="edge"><title>mIndexedSeq-&gt;ArrayBuffer</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M249.458,-215.831C260.42,-206.963 273.77,-196.164 285.626,-186.572"/>
+                  <polygon fill="gray" stroke="gray" points="287.976,-189.173 293.549,-180.163 283.573,-183.731 287.976,-189.173"/>
+                </g>
+                <!-- ArraySeq -->
+                <g id="node27" class="node"><title>ArraySeq</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/ArraySeq.html" xlink:title="ArraySeq">
+                    <polygon fill="steelblue" stroke="steelblue" points="122,-180 88,-180 76,-168 76,-156 88,-144 122,-144 134,-156 134,-168 122,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M88,-180C82,-180 76,-174 76,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M76,-156C76,-150 82,-144 88,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M122,-144C128,-144 134,-150 134,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M134,-168C134,-174 128,-180 122,-180"/>
+                    <polyline fill="none" stroke="none" points="122,-180 88,-180 "/>
+                    <path fill="none" stroke="none" d="M88,-180C82,-180 76,-174 76,-168"/>
+                    <polyline fill="none" stroke="none" points="76,-168 76,-156 "/>
+                    <path fill="none" stroke="none" d="M76,-156C76,-150 82,-144 88,-144"/>
+                    <polyline fill="none" stroke="none" points="88,-144 122,-144 "/>
+                    <path fill="none" stroke="none" d="M122,-144C128,-144 134,-150 134,-156"/>
+                    <polyline fill="none" stroke="none" points="134,-156 134,-168 "/>
+                    <path fill="none" stroke="none" d="M134,-168C134,-174 128,-180 122,-180"/>
+                    <text text-anchor="middle" x="105" y="-159" font-family="tahoma" font-size="10.00" fill="white">ArraySeq</text>
+                  </a>
+                </g>
+                <!-- mIndexedSeq&#45;&gt;ArraySeq -->
+                <g id="edge26" class="edge"><title>mIndexedSeq-&gt;ArraySeq</title>
+                  <path fill="none" stroke="gray" d="M196.214,-215.831C179.984,-206.253 159.937,-194.422 142.773,-184.292"/>
+                  <polygon fill="gray" stroke="gray" points="144.487,-181.24 134.096,-179.171 140.929,-187.268 144.487,-181.24"/>
+                </g>
+                <!-- Array -->
+                <g id="node28" class="node"><title>Array</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/Array.html" xlink:title="Array">
+                    <polygon fill="steelblue" stroke="steelblue" points="177,-108 147,-108 135,-96 135,-84 147,-72 177,-72 189,-84 189,-96 177,-108"/>
+                    <path fill="steelblue" stroke="steelblue" d="M147,-108C141,-108 135,-102 135,-96"/>
+                    <path fill="steelblue" stroke="steelblue" d="M135,-84C135,-78 141,-72 147,-72"/>
+                    <path fill="steelblue" stroke="steelblue" d="M177,-72C183,-72 189,-78 189,-84"/>
+                    <path fill="steelblue" stroke="steelblue" d="M189,-96C189,-102 183,-108 177,-108"/>
+                    <polyline fill="none" stroke="none" points="177,-108 147,-108 "/>
+                    <path fill="none" stroke="none" d="M147,-108C141,-108 135,-102 135,-96"/>
+                    <polyline fill="none" stroke="none" points="135,-96 135,-84 "/>
+                    <path fill="none" stroke="none" d="M135,-84C135,-78 141,-72 147,-72"/>
+                    <polyline fill="none" stroke="none" points="147,-72 177,-72 "/>
+                    <path fill="none" stroke="none" d="M177,-72C183,-72 189,-78 189,-84"/>
+                    <polyline fill="none" stroke="none" points="189,-84 189,-96 "/>
+                    <path fill="none" stroke="none" d="M189,-96C189,-102 183,-108 177,-108"/>
+                    <text text-anchor="middle" x="162" y="-87" font-family="tahoma" font-size="10.00" fill="white">Array</text>
+                  </a>
+                </g>
+                <!-- mIndexedSeq&#45;&gt;Array -->
+                <g id="edge28" class="edge"><title>mIndexedSeq-&gt;Array</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/ArrayOps.html">
+                    <path fill="none" stroke="gray" stroke-dasharray="5,2" d="M207.366,-215.702C198.033,-205.957 187.519,-193.263 181,-180 171.461,-160.591 166.697,-136.532 164.326,-118.173"/>
+                    <polygon fill="gray" stroke="gray" points="167.789,-117.645 163.188,-108.101 160.833,-118.431 167.789,-117.645"/>
+                  </a>
+                </g>
+                <!-- StringBuilder -->
+                <g id="node29" class="node"><title>StringBuilder</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/StringBuilder.html" xlink:title="StringBuilder">
+                    <polygon fill="steelblue" stroke="steelblue" points="252,-180 202,-180 190,-168 190,-156 202,-144 252,-144 264,-156 264,-168 252,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M202,-180C196,-180 190,-174 190,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M190,-156C190,-150 196,-144 202,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M252,-144C258,-144 264,-150 264,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M264,-168C264,-174 258,-180 252,-180"/>
+                    <polyline fill="none" stroke="none" points="252,-180 202,-180 "/>
+                    <path fill="none" stroke="none" d="M202,-180C196,-180 190,-174 190,-168"/>
+                    <polyline fill="none" stroke="none" points="190,-168 190,-156 "/>
+                    <path fill="none" stroke="none" d="M190,-156C190,-150 196,-144 202,-144"/>
+                    <polyline fill="none" stroke="none" points="202,-144 252,-144 "/>
+                    <path fill="none" stroke="none" d="M252,-144C258,-144 264,-150 264,-156"/>
+                    <polyline fill="none" stroke="none" points="264,-156 264,-168 "/>
+                    <path fill="none" stroke="none" d="M264,-168C264,-174 258,-180 252,-180"/>
+                    <text text-anchor="middle" x="227" y="-159" font-family="tahoma" font-size="10.00" fill="white">StringBuilder</text>
+                  </a>
+                </g>
+                <!-- mIndexedSeq&#45;&gt;StringBuilder -->
+                <g id="edge30" class="edge"><title>mIndexedSeq-&gt;StringBuilder</title>
+                  <path fill="none" stroke="gray" d="M227,-215.831C227,-208.131 227,-198.974 227,-190.417"/>
+                  <polygon fill="gray" stroke="gray" points="230.5,-190.413 227,-180.413 223.5,-190.413 230.5,-190.413"/>
+                </g>
+                <!-- Buffer&#45;&gt;ArrayBuffer -->
+                <g id="edge45" class="edge"><title>Buffer-&gt;ArrayBuffer</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M390.766,-215.831C378.212,-206.793 362.872,-195.748 349.361,-186.02"/>
+                  <polygon fill="gray" stroke="gray" points="351.387,-183.166 341.226,-180.163 347.296,-188.846 351.387,-183.166"/>
+                </g>
+                <!-- ObservableBuffer -->
+                <g id="node31" class="node"><title>ObservableBuffer</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/ObservableBuffer.html" xlink:title="ObservableBuffer">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="341,-108 273,-108 261,-96 261,-84 273,-72 341,-72 353,-84 353,-96 341,-108"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M273,-108C267,-108 261,-102 261,-96"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M261,-84C261,-78 267,-72 273,-72"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M341,-72C347,-72 353,-78 353,-84"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M353,-96C353,-102 347,-108 341,-108"/>
+                    <polyline fill="none" stroke="none" points="341,-108 273,-108 "/>
+                    <path fill="none" stroke="none" d="M273,-108C267,-108 261,-102 261,-96"/>
+                    <polyline fill="none" stroke="none" points="261,-96 261,-84 "/>
+                    <path fill="none" stroke="none" d="M261,-84C261,-78 267,-72 273,-72"/>
+                    <polyline fill="none" stroke="none" points="273,-72 341,-72 "/>
+                    <path fill="none" stroke="none" d="M341,-72C347,-72 353,-78 353,-84"/>
+                    <polyline fill="none" stroke="none" points="353,-84 353,-96 "/>
+                    <path fill="none" stroke="none" d="M353,-96C353,-102 347,-108 341,-108"/>
+                    <text text-anchor="middle" x="307" y="-87" font-family="tahoma" font-size="10.00" fill="white">ObservableBuffer</text>
+                  </a>
+                </g>
+                <!-- Buffer&#45;&gt;ObservableBuffer -->
+                <g id="edge49" class="edge"><title>Buffer-&gt;ObservableBuffer</title>
+                  <path fill="none" stroke="gray" d="M405.874,-215.693C395.192,-196.981 377.387,-167.422 359,-144 351.292,-134.182 342.062,-124.141 333.531,-115.423"/>
+                  <polygon fill="gray" stroke="gray" points="335.809,-112.751 326.27,-108.14 330.852,-117.693 335.809,-112.751"/>
+                </g>
+                <!-- SynchronizedBuffer -->
+                <g id="node32" class="node"><title>SynchronizedBuffer</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/SynchronizedBuffer.html" xlink:title="SynchronizedBuffer">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="461,-108 383,-108 371,-96 371,-84 383,-72 461,-72 473,-84 473,-96 461,-108"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M383,-108C377,-108 371,-102 371,-96"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M371,-84C371,-78 377,-72 383,-72"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M461,-72C467,-72 473,-78 473,-84"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M473,-96C473,-102 467,-108 461,-108"/>
+                    <polyline fill="none" stroke="none" points="461,-108 383,-108 "/>
+                    <path fill="none" stroke="none" d="M383,-108C377,-108 371,-102 371,-96"/>
+                    <polyline fill="none" stroke="none" points="371,-96 371,-84 "/>
+                    <path fill="none" stroke="none" d="M371,-84C371,-78 377,-72 383,-72"/>
+                    <polyline fill="none" stroke="none" points="383,-72 461,-72 "/>
+                    <path fill="none" stroke="none" d="M461,-72C467,-72 473,-78 473,-84"/>
+                    <polyline fill="none" stroke="none" points="473,-84 473,-96 "/>
+                    <path fill="none" stroke="none" d="M473,-96C473,-102 467,-108 461,-108"/>
+                    <text text-anchor="middle" x="422" y="-87" font-family="tahoma" font-size="10.00" fill="white">SynchronizedBuffer</text>
+                  </a>
+                </g>
+                <!-- Buffer&#45;&gt;SynchronizedBuffer -->
+                <g id="edge51" class="edge"><title>Buffer-&gt;SynchronizedBuffer</title>
+                  <path fill="none" stroke="gray" d="M416.76,-215.762C417.783,-191.201 419.615,-147.247 420.819,-118.354"/>
+                  <polygon fill="gray" stroke="gray" points="424.327,-118.227 421.246,-108.09 417.333,-117.935 424.327,-118.227"/>
+                </g>
+                <!-- ListBuffer -->
+                <g id="node33" class="node"><title>ListBuffer</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/ListBuffer.html" xlink:title="ListBuffer">
+                    <polygon fill="steelblue" stroke="steelblue" points="490,-180 456,-180 444,-168 444,-156 456,-144 490,-144 502,-156 502,-168 490,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M456,-180C450,-180 444,-174 444,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M444,-156C444,-150 450,-144 456,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M490,-144C496,-144 502,-150 502,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M502,-168C502,-174 496,-180 490,-180"/>
+                    <polyline fill="none" stroke="none" points="490,-180 456,-180 "/>
+                    <path fill="none" stroke="none" d="M456,-180C450,-180 444,-174 444,-168"/>
+                    <polyline fill="none" stroke="none" points="444,-168 444,-156 "/>
+                    <path fill="none" stroke="none" d="M444,-156C444,-150 450,-144 456,-144"/>
+                    <polyline fill="none" stroke="none" points="456,-144 490,-144 "/>
+                    <path fill="none" stroke="none" d="M490,-144C496,-144 502,-150 502,-156"/>
+                    <polyline fill="none" stroke="none" points="502,-156 502,-168 "/>
+                    <path fill="none" stroke="none" d="M502,-168C502,-174 496,-180 490,-180"/>
+                    <text text-anchor="middle" x="473" y="-159" font-family="tahoma" font-size="10.00" fill="white">ListBuffer</text>
+                  </a>
+                </g>
+                <!-- Buffer&#45;&gt;ListBuffer -->
+                <g id="edge47" class="edge"><title>Buffer-&gt;ListBuffer</title>
+                  <path fill="none" stroke="gray" d="M430.384,-215.831C436.949,-207.539 444.851,-197.557 452.058,-188.453"/>
+                  <polygon fill="gray" stroke="gray" points="454.96,-190.426 458.423,-180.413 449.472,-186.081 454.96,-190.426"/>
+                </g>
+                <!-- SynchronizedStack -->
+                <g id="node35" class="node"><title>SynchronizedStack</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/SynchronizedStack.html" xlink:title="SynchronizedStack">
+                    <polygon fill="steelblue" stroke="steelblue" points="585,-108 509,-108 497,-96 497,-84 509,-72 585,-72 597,-84 597,-96 585,-108"/>
+                    <path fill="steelblue" stroke="steelblue" d="M509,-108C503,-108 497,-102 497,-96"/>
+                    <path fill="steelblue" stroke="steelblue" d="M497,-84C497,-78 503,-72 509,-72"/>
+                    <path fill="steelblue" stroke="steelblue" d="M585,-72C591,-72 597,-78 597,-84"/>
+                    <path fill="steelblue" stroke="steelblue" d="M597,-96C597,-102 591,-108 585,-108"/>
+                    <polyline fill="none" stroke="none" points="585,-108 509,-108 "/>
+                    <path fill="none" stroke="none" d="M509,-108C503,-108 497,-102 497,-96"/>
+                    <polyline fill="none" stroke="none" points="497,-96 497,-84 "/>
+                    <path fill="none" stroke="none" d="M497,-84C497,-78 503,-72 509,-72"/>
+                    <polyline fill="none" stroke="none" points="509,-72 585,-72 "/>
+                    <path fill="none" stroke="none" d="M585,-72C591,-72 597,-78 597,-84"/>
+                    <polyline fill="none" stroke="none" points="597,-84 597,-96 "/>
+                    <path fill="none" stroke="none" d="M597,-96C597,-102 591,-108 585,-108"/>
+                    <text text-anchor="middle" x="547" y="-87" font-family="tahoma" font-size="10.00" fill="white">SynchronizedStack</text>
+                  </a>
+                </g>
+                <!-- mStack&#45;&gt;SynchronizedStack -->
+                <g id="edge54" class="edge"><title>mStack-&gt;SynchronizedStack</title>
+                  <path fill="none" stroke="gray" d="M547,-143.831C547,-136.131 547,-126.974 547,-118.417"/>
+                  <polygon fill="gray" stroke="gray" points="550.5,-118.413 547,-108.413 543.5,-118.413 550.5,-118.413"/>
+                </g>
+                <!-- SynchronizedPriorityQueue -->
+                <g id="node38" class="node"><title>SynchronizedPriorityQueue</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/SynchronizedPriorityQueue.html" xlink:title="SynchronizedPriorityQueue">
+                    <polygon fill="steelblue" stroke="steelblue" points="765,-108 653,-108 641,-96 641,-84 653,-72 765,-72 777,-84 777,-96 765,-108"/>
+                    <path fill="steelblue" stroke="steelblue" d="M653,-108C647,-108 641,-102 641,-96"/>
+                    <path fill="steelblue" stroke="steelblue" d="M641,-84C641,-78 647,-72 653,-72"/>
+                    <path fill="steelblue" stroke="steelblue" d="M765,-72C771,-72 777,-78 777,-84"/>
+                    <path fill="steelblue" stroke="steelblue" d="M777,-96C777,-102 771,-108 765,-108"/>
+                    <polyline fill="none" stroke="none" points="765,-108 653,-108 "/>
+                    <path fill="none" stroke="none" d="M653,-108C647,-108 641,-102 641,-96"/>
+                    <polyline fill="none" stroke="none" points="641,-96 641,-84 "/>
+                    <path fill="none" stroke="none" d="M641,-84C641,-78 647,-72 653,-72"/>
+                    <polyline fill="none" stroke="none" points="653,-72 765,-72 "/>
+                    <path fill="none" stroke="none" d="M765,-72C771,-72 777,-78 777,-84"/>
+                    <polyline fill="none" stroke="none" points="777,-84 777,-96 "/>
+                    <path fill="none" stroke="none" d="M777,-96C777,-102 771,-108 765,-108"/>
+                    <text text-anchor="middle" x="709" y="-87" font-family="tahoma" font-size="10.00" fill="white">SynchronizedPriorityQueue</text>
+                  </a>
+                </g>
+                <!-- PriorityQueue&#45;&gt;SynchronizedPriorityQueue -->
+                <g id="edge59" class="edge"><title>PriorityQueue-&gt;SynchronizedPriorityQueue</title>
+                  <path fill="none" stroke="gray" d="M713.486,-143.831C712.844,-136.131 712.081,-126.974 711.368,-118.417"/>
+                  <polygon fill="gray" stroke="gray" points="714.853,-118.088 710.534,-108.413 707.877,-118.669 714.853,-118.088"/>
+                </g>
+                <!-- MutableList -->
+                <g id="node40" class="node"><title>MutableList</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/MutableList.html" xlink:title="MutableList">
+                    <polygon fill="steelblue" stroke="steelblue" points="839,-180 795,-180 783,-168 783,-156 795,-144 839,-144 851,-156 851,-168 839,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M795,-180C789,-180 783,-174 783,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M783,-156C783,-150 789,-144 795,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M839,-144C845,-144 851,-150 851,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M851,-168C851,-174 845,-180 839,-180"/>
+                    <polyline fill="none" stroke="none" points="839,-180 795,-180 "/>
+                    <path fill="none" stroke="none" d="M795,-180C789,-180 783,-174 783,-168"/>
+                    <polyline fill="none" stroke="none" points="783,-168 783,-156 "/>
+                    <path fill="none" stroke="none" d="M783,-156C783,-150 789,-144 795,-144"/>
+                    <polyline fill="none" stroke="none" points="795,-144 839,-144 "/>
+                    <path fill="none" stroke="none" d="M839,-144C845,-144 851,-150 851,-156"/>
+                    <polyline fill="none" stroke="none" points="851,-156 851,-168 "/>
+                    <path fill="none" stroke="none" d="M851,-168C851,-174 845,-180 839,-180"/>
+                    <text text-anchor="middle" x="817" y="-159" font-family="tahoma" font-size="10.00" fill="white">MutableList</text>
+                  </a>
+                </g>
+                <!-- mLinearSeq&#45;&gt;MutableList -->
+                <g id="edge34" class="edge"><title>mLinearSeq-&gt;MutableList</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M847.654,-215.831C843.076,-207.792 837.595,-198.167 832.541,-189.292"/>
+                  <polygon fill="gray" stroke="gray" points="835.475,-187.371 827.485,-180.413 829.392,-190.835 835.475,-187.371"/>
+                </g>
+                <!-- LinkedList -->
+                <g id="node43" class="node"><title>LinkedList</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/LinkedList.html" xlink:title="LinkedList">
+                    <polygon fill="steelblue" stroke="steelblue" points="917,-180 881,-180 869,-168 869,-156 881,-144 917,-144 929,-156 929,-168 917,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M881,-180C875,-180 869,-174 869,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M869,-156C869,-150 875,-144 881,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M917,-144C923,-144 929,-150 929,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M929,-168C929,-174 923,-180 917,-180"/>
+                    <polyline fill="none" stroke="none" points="917,-180 881,-180 "/>
+                    <path fill="none" stroke="none" d="M881,-180C875,-180 869,-174 869,-168"/>
+                    <polyline fill="none" stroke="none" points="869,-168 869,-156 "/>
+                    <path fill="none" stroke="none" d="M869,-156C869,-150 875,-144 881,-144"/>
+                    <polyline fill="none" stroke="none" points="881,-144 917,-144 "/>
+                    <path fill="none" stroke="none" d="M917,-144C923,-144 929,-150 929,-156"/>
+                    <polyline fill="none" stroke="none" points="929,-156 929,-168 "/>
+                    <path fill="none" stroke="none" d="M929,-168C929,-174 923,-180 917,-180"/>
+                    <text text-anchor="middle" x="899" y="-159" font-family="tahoma" font-size="10.00" fill="white">LinkedList</text>
+                  </a>
+                </g>
+                <!-- mLinearSeq&#45;&gt;LinkedList -->
+                <g id="edge39" class="edge"><title>mLinearSeq-&gt;LinkedList</title>
+                  <path fill="none" stroke="gray" d="M868.346,-215.831C872.924,-207.792 878.405,-198.167 883.459,-189.292"/>
+                  <polygon fill="gray" stroke="gray" points="886.608,-190.835 888.515,-180.413 880.525,-187.371 886.608,-190.835"/>
+                </g>
+                <!-- DoubleLinkedList -->
+                <g id="node44" class="node"><title>DoubleLinkedList</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/DoubleLinkedList.html" xlink:title="DoubleLinkedList">
+                    <polygon fill="steelblue" stroke="steelblue" points="1027,-180 959,-180 947,-168 947,-156 959,-144 1027,-144 1039,-156 1039,-168 1027,-180"/>
+                    <path fill="steelblue" stroke="steelblue" d="M959,-180C953,-180 947,-174 947,-168"/>
+                    <path fill="steelblue" stroke="steelblue" d="M947,-156C947,-150 953,-144 959,-144"/>
+                    <path fill="steelblue" stroke="steelblue" d="M1027,-144C1033,-144 1039,-150 1039,-156"/>
+                    <path fill="steelblue" stroke="steelblue" d="M1039,-168C1039,-174 1033,-180 1027,-180"/>
+                    <polyline fill="none" stroke="none" points="1027,-180 959,-180 "/>
+                    <path fill="none" stroke="none" d="M959,-180C953,-180 947,-174 947,-168"/>
+                    <polyline fill="none" stroke="none" points="947,-168 947,-156 "/>
+                    <path fill="none" stroke="none" d="M947,-156C947,-150 953,-144 959,-144"/>
+                    <polyline fill="none" stroke="none" points="959,-144 1027,-144 "/>
+                    <path fill="none" stroke="none" d="M1027,-144C1033,-144 1039,-150 1039,-156"/>
+                    <polyline fill="none" stroke="none" points="1039,-156 1039,-168 "/>
+                    <path fill="none" stroke="none" d="M1039,-168C1039,-174 1033,-180 1027,-180"/>
+                    <text text-anchor="middle" x="993" y="-159" font-family="tahoma" font-size="10.00" fill="white">DoubleLinkedList</text>
+                  </a>
+                </g>
+                <!-- mLinearSeq&#45;&gt;DoubleLinkedList -->
+                <g id="edge41" class="edge"><title>mLinearSeq-&gt;DoubleLinkedList</title>
+                  <path fill="none" stroke="gray" d="M888.297,-217.842C906.499,-208.134 929.949,-195.627 950.042,-184.911"/>
+                  <polygon fill="gray" stroke="gray" points="951.83,-187.924 959.006,-180.13 948.535,-181.748 951.83,-187.924"/>
+                </g>
+                <!-- mQueue -->
+                <g id="node41" class="node"><title>mQueue</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/Queue.html" xlink:title="Queue">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="837,-108 807,-108 795,-96 795,-84 807,-72 837,-72 849,-84 849,-96 837,-108"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M807,-108C801,-108 795,-102 795,-96"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M795,-84C795,-78 801,-72 807,-72"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M837,-72C843,-72 849,-78 849,-84"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M849,-96C849,-102 843,-108 837,-108"/>
+                    <polyline fill="none" stroke="none" points="837,-108 807,-108 "/>
+                    <path fill="none" stroke="none" d="M807,-108C801,-108 795,-102 795,-96"/>
+                    <polyline fill="none" stroke="none" points="795,-96 795,-84 "/>
+                    <path fill="none" stroke="none" d="M795,-84C795,-78 801,-72 807,-72"/>
+                    <polyline fill="none" stroke="none" points="807,-72 837,-72 "/>
+                    <path fill="none" stroke="none" d="M837,-72C843,-72 849,-78 849,-84"/>
+                    <polyline fill="none" stroke="none" points="849,-84 849,-96 "/>
+                    <path fill="none" stroke="none" d="M849,-96C849,-102 843,-108 837,-108"/>
+                    <text text-anchor="middle" x="822" y="-87" font-family="tahoma" font-size="10.00" fill="white">Queue</text>
+                  </a>
+                </g>
+                <!-- MutableList&#45;&gt;mQueue -->
+                <g id="edge36" class="edge"><title>MutableList-&gt;mQueue</title>
+                  <path fill="none" stroke="gray" d="M818.262,-143.831C818.796,-136.131 819.432,-126.974 820.027,-118.417"/>
+                  <polygon fill="gray" stroke="gray" points="823.52,-118.632 820.721,-108.413 816.537,-118.147 823.52,-118.632"/>
+                </g>
+                <!-- SynchronizedQueue -->
+                <g id="node42" class="node"><title>SynchronizedQueue</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/SynchronizedQueue.html" xlink:title="SynchronizedQueue">
+                    <polygon fill="steelblue" stroke="steelblue" points="862,-36 782,-36 770,-24 770,-12 782,-1.61239e-14 862,-5.19243e-15 874,-12 874,-24 862,-36"/>
+                    <path fill="steelblue" stroke="steelblue" d="M782,-36C776,-36 770,-30 770,-24"/>
+                    <path fill="steelblue" stroke="steelblue" d="M770,-12C770,-6 776,-1.69437e-14 782,-1.61239e-14"/>
+                    <path fill="steelblue" stroke="steelblue" d="M862,-5.19243e-15C868,-4.37257e-15 874,-6 874,-12"/>
+                    <path fill="steelblue" stroke="steelblue" d="M874,-24C874,-30 868,-36 862,-36"/>
+                    <polyline fill="none" stroke="none" points="862,-36 782,-36 "/>
+                    <path fill="none" stroke="none" d="M782,-36C776,-36 770,-30 770,-24"/>
+                    <polyline fill="none" stroke="none" points="770,-24 770,-12 "/>
+                    <path fill="none" stroke="none" d="M770,-12C770,-6 776,-1.69437e-14 782,-1.61239e-14"/>
+                    <polyline fill="none" stroke="none" points="782,-1.61239e-14 862,-5.19243e-15 "/>
+                    <path fill="none" stroke="none" d="M862,-5.19243e-15C868,-4.37257e-15 874,-6 874,-12"/>
+                    <polyline fill="none" stroke="none" points="874,-12 874,-24 "/>
+                    <path fill="none" stroke="none" d="M874,-24C874,-30 868,-36 862,-36"/>
+                    <text text-anchor="middle" x="822" y="-15" font-family="tahoma" font-size="10.00" fill="white">SynchronizedQueue</text>
+                  </a>
+                </g>
+                <!-- mQueue&#45;&gt;SynchronizedQueue -->
+                <g id="edge37" class="edge"><title>mQueue-&gt;SynchronizedQueue</title>
+                  <path fill="none" stroke="gray" d="M822,-71.8314C822,-64.131 822,-54.9743 822,-46.4166"/>
+                  <polygon fill="gray" stroke="gray" points="825.5,-46.4132 822,-36.4133 818.5,-46.4133 825.5,-46.4132"/>
+                </g>
+                <!-- mHashSet -->
+                <g id="node46" class="node"><title>mHashSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/HashSet.html" xlink:title="HashSet">
+                    <polygon fill="steelblue" stroke="steelblue" points="676,-468 646,-468 634,-456 634,-444 646,-432 676,-432 688,-444 688,-456 676,-468"/>
+                    <path fill="steelblue" stroke="steelblue" d="M646,-468C640,-468 634,-462 634,-456"/>
+                    <path fill="steelblue" stroke="steelblue" d="M634,-444C634,-438 640,-432 646,-432"/>
+                    <path fill="steelblue" stroke="steelblue" d="M676,-432C682,-432 688,-438 688,-444"/>
+                    <path fill="steelblue" stroke="steelblue" d="M688,-456C688,-462 682,-468 676,-468"/>
+                    <polyline fill="none" stroke="none" points="676,-468 646,-468 "/>
+                    <path fill="none" stroke="none" d="M646,-468C640,-468 634,-462 634,-456"/>
+                    <polyline fill="none" stroke="none" points="634,-456 634,-444 "/>
+                    <path fill="none" stroke="none" d="M634,-444C634,-438 640,-432 646,-432"/>
+                    <polyline fill="none" stroke="none" points="646,-432 676,-432 "/>
+                    <path fill="none" stroke="none" d="M676,-432C682,-432 688,-438 688,-444"/>
+                    <polyline fill="none" stroke="none" points="688,-444 688,-456 "/>
+                    <path fill="none" stroke="none" d="M688,-456C688,-462 682,-468 676,-468"/>
+                    <text text-anchor="middle" x="661" y="-447" font-family="tahoma" font-size="10.00" fill="white">HashSet</text>
+                  </a>
+                </g>
+                <!-- mSet&#45;&gt;mHashSet -->
+                <g id="edge63" class="edge"><title>mSet-&gt;mHashSet</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M760.755,-506.554C742.173,-496.019 717.362,-481.953 697.133,-470.485"/>
+                  <polygon fill="gray" stroke="gray" points="698.625,-467.307 688.2,-465.42 695.173,-473.397 698.625,-467.307"/>
+                </g>
+                <!-- mBitSet -->
+                <g id="node47" class="node"><title>mBitSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/BitSet.html" xlink:title="BitSet">
+                    <polygon fill="steelblue" stroke="steelblue" points="748,-468 718,-468 706,-456 706,-444 718,-432 748,-432 760,-444 760,-456 748,-468"/>
+                    <path fill="steelblue" stroke="steelblue" d="M718,-468C712,-468 706,-462 706,-456"/>
+                    <path fill="steelblue" stroke="steelblue" d="M706,-444C706,-438 712,-432 718,-432"/>
+                    <path fill="steelblue" stroke="steelblue" d="M748,-432C754,-432 760,-438 760,-444"/>
+                    <path fill="steelblue" stroke="steelblue" d="M760,-456C760,-462 754,-468 748,-468"/>
+                    <polyline fill="none" stroke="none" points="748,-468 718,-468 "/>
+                    <path fill="none" stroke="none" d="M718,-468C712,-468 706,-462 706,-456"/>
+                    <polyline fill="none" stroke="none" points="706,-456 706,-444 "/>
+                    <path fill="none" stroke="none" d="M706,-444C706,-438 712,-432 718,-432"/>
+                    <polyline fill="none" stroke="none" points="718,-432 748,-432 "/>
+                    <path fill="none" stroke="none" d="M748,-432C754,-432 760,-438 760,-444"/>
+                    <polyline fill="none" stroke="none" points="760,-444 760,-456 "/>
+                    <path fill="none" stroke="none" d="M760,-456C760,-462 754,-468 748,-468"/>
+                    <text text-anchor="middle" x="733" y="-447" font-family="tahoma" font-size="10.00" fill="white">BitSet</text>
+                  </a>
+                </g>
+                <!-- mSet&#45;&gt;mBitSet -->
+                <g id="edge65" class="edge"><title>mSet-&gt;mBitSet</title>
+                  <path fill="none" stroke="gray" d="M774.121,-503.831C767.786,-495.539 760.162,-485.557 753.207,-476.453"/>
+                  <polygon fill="gray" stroke="gray" points="755.917,-474.235 747.066,-468.413 750.355,-478.485 755.917,-474.235"/>
+                </g>
+                <!-- ObservableSet -->
+                <g id="node48" class="node"><title>ObservableSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/ObservableSet.html" xlink:title="ObservableSet">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="751,-396 695,-396 683,-384 683,-372 695,-360 751,-360 763,-372 763,-384 751,-396"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M695,-396C689,-396 683,-390 683,-384"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M683,-372C683,-366 689,-360 695,-360"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M751,-360C757,-360 763,-366 763,-372"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M763,-384C763,-390 757,-396 751,-396"/>
+                    <polyline fill="none" stroke="none" points="751,-396 695,-396 "/>
+                    <path fill="none" stroke="none" d="M695,-396C689,-396 683,-390 683,-384"/>
+                    <polyline fill="none" stroke="none" points="683,-384 683,-372 "/>
+                    <path fill="none" stroke="none" d="M683,-372C683,-366 689,-360 695,-360"/>
+                    <polyline fill="none" stroke="none" points="695,-360 751,-360 "/>
+                    <path fill="none" stroke="none" d="M751,-360C757,-360 763,-366 763,-372"/>
+                    <polyline fill="none" stroke="none" points="763,-372 763,-384 "/>
+                    <path fill="none" stroke="none" d="M763,-384C763,-390 757,-396 751,-396"/>
+                    <text text-anchor="middle" x="723" y="-375" font-family="tahoma" font-size="10.00" fill="white">ObservableSet</text>
+                  </a>
+                </g>
+                <!-- mSet&#45;&gt;ObservableSet -->
+                <g id="edge69" class="edge"><title>mSet-&gt;ObservableSet</title>
+                  <path fill="none" stroke="gray" d="M786.812,-503.899C784.989,-485.091 780.411,-455.218 769,-432 764.06,-421.949 756.825,-412.225 749.549,-403.863"/>
+                  <polygon fill="gray" stroke="gray" points="751.964,-401.318 742.634,-396.298 746.798,-406.041 751.964,-401.318"/>
+                </g>
+                <!-- SynchronizedSet -->
+                <g id="node49" class="node"><title>SynchronizedSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/SynchronizedSet.html" xlink:title="SynchronizedSet">
+                    <polygon fill="cadetblue" stroke="cadetblue" points="859,-396 793,-396 781,-384 781,-372 793,-360 859,-360 871,-372 871,-384 859,-396"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M793,-396C787,-396 781,-390 781,-384"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M781,-372C781,-366 787,-360 793,-360"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M859,-360C865,-360 871,-366 871,-372"/>
+                    <path fill="cadetblue" stroke="cadetblue" d="M871,-384C871,-390 865,-396 859,-396"/>
+                    <polyline fill="none" stroke="none" points="859,-396 793,-396 "/>
+                    <path fill="none" stroke="none" d="M793,-396C787,-396 781,-390 781,-384"/>
+                    <polyline fill="none" stroke="none" points="781,-384 781,-372 "/>
+                    <path fill="none" stroke="none" d="M781,-372C781,-366 787,-360 793,-360"/>
+                    <polyline fill="none" stroke="none" points="793,-360 859,-360 "/>
+                    <path fill="none" stroke="none" d="M859,-360C865,-360 871,-366 871,-372"/>
+                    <polyline fill="none" stroke="none" points="871,-372 871,-384 "/>
+                    <path fill="none" stroke="none" d="M871,-384C871,-390 865,-396 859,-396"/>
+                    <text text-anchor="middle" x="826" y="-375" font-family="tahoma" font-size="10.00" fill="white">SynchronizedSet</text>
+                  </a>
+                </g>
+                <!-- mSet&#45;&gt;SynchronizedSet -->
+                <g id="edge71" class="edge"><title>mSet-&gt;SynchronizedSet</title>
+                  <path fill="none" stroke="gray" d="M792.813,-503.762C799.323,-479.093 810.995,-434.86 818.618,-405.973"/>
+                  <polygon fill="gray" stroke="gray" points="822.059,-406.652 821.226,-396.09 815.291,-404.866 822.059,-406.652"/>
+                </g>
+                <!-- ImmutableSetAdaptor -->
+                <g id="node50" class="node"><title>ImmutableSetAdaptor</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/ImmutableSetAdaptor.html" xlink:title="ImmutableSetAdaptor">
+                    <polygon fill="steelblue" stroke="steelblue" points="991,-396 901,-396 889,-384 889,-372 901,-360 991,-360 1003,-372 1003,-384 991,-396"/>
+                    <path fill="steelblue" stroke="steelblue" d="M901,-396C895,-396 889,-390 889,-384"/>
+                    <path fill="steelblue" stroke="steelblue" d="M889,-372C889,-366 895,-360 901,-360"/>
+                    <path fill="steelblue" stroke="steelblue" d="M991,-360C997,-360 1003,-366 1003,-372"/>
+                    <path fill="steelblue" stroke="steelblue" d="M1003,-384C1003,-390 997,-396 991,-396"/>
+                    <polyline fill="none" stroke="none" points="991,-396 901,-396 "/>
+                    <path fill="none" stroke="none" d="M901,-396C895,-396 889,-390 889,-384"/>
+                    <polyline fill="none" stroke="none" points="889,-384 889,-372 "/>
+                    <path fill="none" stroke="none" d="M889,-372C889,-366 895,-360 901,-360"/>
+                    <polyline fill="none" stroke="none" points="901,-360 991,-360 "/>
+                    <path fill="none" stroke="none" d="M991,-360C997,-360 1003,-366 1003,-372"/>
+                    <polyline fill="none" stroke="none" points="1003,-372 1003,-384 "/>
+                    <path fill="none" stroke="none" d="M1003,-384C1003,-390 997,-396 991,-396"/>
+                    <text text-anchor="middle" x="946" y="-375" font-family="tahoma" font-size="10.00" fill="white">ImmutableSetAdaptor</text>
+                  </a>
+                </g>
+                <!-- mSet&#45;&gt;ImmutableSetAdaptor -->
+                <g id="edge73" class="edge"><title>mSet-&gt;ImmutableSetAdaptor</title>
+                  <path fill="none" stroke="gray" d="M808.011,-503.762C836.028,-478.227 887.044,-431.732 918.58,-402.991"/>
+                  <polygon fill="gray" stroke="gray" points="921.118,-405.413 926.152,-396.09 916.403,-400.239 921.118,-405.413"/>
+                </g>
+                <!-- LinkedHashSet -->
+                <g id="node51" class="node"><title>LinkedHashSet</title>
+                  <a xlink:href="http://www.scala-lang.org/api/current/scala/collection/mutable/LinkedHashSet.html" xlink:title="LinkedHashSet">
+                    <polygon fill="steelblue" stroke="steelblue" points="1003,-468 945,-468 933,-456 933,-444 945,-432 1003,-432 1015,-444 1015,-456 1003,-468"/>
+                    <path fill="steelblue" stroke="steelblue" d="M945,-468C939,-468 933,-462 933,-456"/>
+                    <path fill="steelblue" stroke="steelblue" d="M933,-444C933,-438 939,-432 945,-432"/>
+                    <path fill="steelblue" stroke="steelblue" d="M1003,-432C1009,-432 1015,-438 1015,-444"/>
+                    <path fill="steelblue" stroke="steelblue" d="M1015,-456C1015,-462 1009,-468 1003,-468"/>
+                    <polyline fill="none" stroke="none" points="1003,-468 945,-468 "/>
+                    <path fill="none" stroke="none" d="M945,-468C939,-468 933,-462 933,-456"/>
+                    <polyline fill="none" stroke="none" points="933,-456 933,-444 "/>
+                    <path fill="none" stroke="none" d="M933,-444C933,-438 939,-432 945,-432"/>
+                    <polyline fill="none" stroke="none" points="945,-432 1003,-432 "/>
+                    <path fill="none" stroke="none" d="M1003,-432C1009,-432 1015,-438 1015,-444"/>
+                    <polyline fill="none" stroke="none" points="1015,-444 1015,-456 "/>
+                    <path fill="none" stroke="none" d="M1015,-456C1015,-462 1009,-468 1003,-468"/>
+                    <text text-anchor="middle" x="974" y="-447" font-family="tahoma" font-size="10.00" fill="white">LinkedHashSet</text>
+                  </a>
+                </g>
+                <!-- mSet&#45;&gt;LinkedHashSet -->
+                <g id="edge67" class="edge"><title>mSet-&gt;LinkedHashSet</title>
+                  <path fill="none" stroke="gray" d="M815.046,-511.531C843.32,-500.586 888.349,-483.155 923.275,-469.636"/>
+                  <polygon fill="gray" stroke="gray" points="924.773,-472.809 932.835,-465.935 922.246,-466.281 924.773,-472.809"/>
+                </g>
+              </g>
+            </svg>
+            <small>* (c) https://github.com/sirthias/scala-collections-charts</small>
+          </section>
+          <section>
+            <svg width="340pt" height="152pt" viewBox="0.00 0.00 340.00 152.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 148)">
+                <title>legend</title>
+                <!-- Level0 -->
+                <!-- Level1 -->
+                <!-- Level0&#45;&gt;Level1 -->
+                <!-- Level2 -->
+                <!-- Level1&#45;&gt;Level2 -->
+                <!-- Trait -->
+                <g id="node5" class="node"><title>Trait</title>
+                  <polygon fill="cadetblue" stroke="cadetblue" points="64,-144 34,-144 22,-132 22,-120 34,-108 64,-108 76,-120 76,-132 64,-144"/>
+                  <path fill="cadetblue" stroke="cadetblue" d="M34,-144C28,-144 22,-138 22,-132"/>
+                  <path fill="cadetblue" stroke="cadetblue" d="M22,-120C22,-114 28,-108 34,-108"/>
+                  <path fill="cadetblue" stroke="cadetblue" d="M64,-108C70,-108 76,-114 76,-120"/>
+                  <path fill="cadetblue" stroke="cadetblue" d="M76,-132C76,-138 70,-144 64,-144"/>
+                  <polyline fill="none" stroke="none" points="64,-144 34,-144 "/>
+                  <path fill="none" stroke="none" d="M34,-144C28,-144 22,-138 22,-132"/>
+                  <polyline fill="none" stroke="none" points="22,-132 22,-120 "/>
+                  <path fill="none" stroke="none" d="M22,-120C22,-114 28,-108 34,-108"/>
+                  <polyline fill="none" stroke="none" points="34,-108 64,-108 "/>
+                  <path fill="none" stroke="none" d="M64,-108C70,-108 76,-114 76,-120"/>
+                  <polyline fill="none" stroke="none" points="76,-120 76,-132 "/>
+                  <path fill="none" stroke="none" d="M76,-132C76,-138 70,-144 64,-144"/>
+                  <text text-anchor="middle" x="49" y="-123" font-family="tahoma" font-size="10.00" fill="white">Trait</text>
+                </g>
+                <!-- Class -->
+                <g id="node6" class="node"><title>Class</title>
+                  <polygon fill="steelblue" stroke="steelblue" points="64,-36 34,-36 22,-24 22,-12 34,-1.46056e-14 64,-6.71068e-15 76,-12 76,-24 64,-36"/>
+                  <path fill="steelblue" stroke="steelblue" d="M34,-36C28,-36 22,-30 22,-24"/>
+                  <path fill="steelblue" stroke="steelblue" d="M22,-12C22,-6 28,-1.61846e-14 34,-1.46056e-14"/>
+                  <path fill="steelblue" stroke="steelblue" d="M64,-6.71068e-15C70,-5.1317e-15 76,-6 76,-12"/>
+                  <path fill="steelblue" stroke="steelblue" d="M76,-24C76,-30 70,-36 64,-36"/>
+                  <polyline fill="none" stroke="none" points="64,-36 34,-36 "/>
+                  <path fill="none" stroke="none" d="M34,-36C28,-36 22,-30 22,-24"/>
+                  <polyline fill="none" stroke="none" points="22,-24 22,-12 "/>
+                  <path fill="none" stroke="none" d="M22,-12C22,-6 28,-1.61846e-14 34,-1.46056e-14"/>
+                  <polyline fill="none" stroke="none" points="34,-1.46056e-14 64,-6.71068e-15 "/>
+                  <path fill="none" stroke="none" d="M64,-6.71068e-15C70,-5.1317e-15 76,-6 76,-12"/>
+                  <polyline fill="none" stroke="none" points="76,-12 76,-24 "/>
+                  <path fill="none" stroke="none" d="M76,-24C76,-30 70,-36 64,-36"/>
+                  <text text-anchor="middle" x="49" y="-15" font-family="tahoma" font-size="10.00" fill="white">Class</text>
+                </g>
+                <!-- Spacer -->
+                <!-- A -->
+                <!-- B -->
+                <!-- A&#45;&gt;B -->
+                <g id="edge5" class="edge"><title>A-&gt;B</title>
+                  <path fill="none" stroke="gray" d="M148.175,-126C172.524,-126 208.469,-126 235.541,-126"/>
+                  <polygon fill="gray" stroke="gray" points="235.805,-129.5 245.805,-126 235.805,-122.5 235.805,-129.5"/>
+                  <text text-anchor="middle" x="197" y="-129" font-family="tahoma" font-size="10.00" fill="navy"> implemented by </text>
+                </g>
+                <!-- C -->
+                <!-- D -->
+                <!-- C&#45;&gt;D -->
+                <g id="edge7" class="edge"><title>C-&gt;D</title>
+                  <path fill="none" stroke="gray" stroke-width="3" d="M148.15,-72C179.677,-72 231.876,-72 267.319,-72"/>
+                  <polygon fill="gray" stroke="gray" points="267.739,-75.5001 277.739,-72 267.739,-68.5001 267.739,-75.5001"/>
+                  <text text-anchor="middle" x="213" y="-75" font-family="tahoma" font-size="10.00" fill="navy"> default implementation </text>
+                </g>
+                <!-- E -->
+                <!-- F -->
+                <!-- E&#45;&gt;F -->
+                <g id="edge9" class="edge"><title>E-&gt;F</title>
+                  <path fill="none" stroke="gray" stroke-dasharray="5,2" d="M148.034,-18C178.354,-18 227.721,-18 261.698,-18"/>
+                  <polygon fill="gray" stroke="gray" points="261.711,-21.5001 271.711,-18 261.711,-14.5001 261.711,-21.5001"/>
+                  <text text-anchor="middle" x="210" y="-21" font-family="tahoma" font-size="10.00" fill="navy"> via implicit conversion </text>
+                </g>
+              </g>
+            </svg>
+            <small>* (c) https://github.com/sirthias/scala-collections-charts</small>
+          </section>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ## When to pick which
+            - Most of the collections exist in both variants
+            - Depends on the problem to solve
+            - Performance
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ## Immutable
+            - Easy to reason
+            - Can be shared "freely"
+            - Might increase GC
+            - Thread-safe
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ## Mutable
+            - Faster
+            - Thread-safety comes with costs
+            - Might complicate debugging and testing
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ## Collections API
+            Usual suspects:
+            - length
+            - get (called `apply`)
+            - isEmpty
+            - sort
+            - contains
+            - add (but with strange names)
+            - iterator
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ## Hands on Collections!
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ## Collections API - New friends
+            - filter
+            - map
+            - flatMap
+            - take / drop / slice
+            - reverse
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ## Collections API - New friends
+            - fold
+            - reduce
+            - forAll / exists
+            - groupBy
+            - partition
+            - zip / unzip
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ## Hands on Collections!
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+          </script>
+        </section>
+	  </div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+	  // More info about config & dependencies:
+	  // - https://github.com/hakimel/reveal.js#configuration
+	  // - https://github.com/hakimel/reveal.js#dependencies
+	  Reveal.initialize({
+        history: true,
+        slideNumber: true,
+	    dependencies:[
+	      { src: 'plugin/markdown/marked.js' },
+	      { src: 'plugin/markdown/markdown.js' },
+	      { src: 'plugin/notes/notes.js', async: true },
+	      { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	    ]
+	  });
+	</script>
+  </body>
+</html>
