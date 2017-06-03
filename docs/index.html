@@ -2030,7 +2030,7 @@
             ## Collections API - New friends
             - fold
             - reduce
-            - forAll / exists
+            - forall / exists
             - groupBy
             - partition
             - zip / unzip
@@ -2043,22 +2043,54 @@
         </section>
         <section data-markdown>
           <script type="text/template">
+            ## Excercises
+            1. Duplicate the elements of a list a given number of times
+            2. Multiply all numbers of one list with all numbers of another one
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
+            ## Word on Streams
+            - They are evaluated lazily
+            - Deal with potential infinite elements
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
+            ## Hands On!
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
+            # For Comprehension
+            - Easier way to deal with nested map and flatMap
+            - It has filter capabilities
+            - Can define variables
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
+            ## Example
+            ```
+            val numbers = Seq(1, 2, 3)
+
+            for {
+              x <- numbers
+            } yield x * 2
+            ```
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            # For Comprehension
+            - Converted to sequence of filter, flatMap and map
+            - Not only for Collections
+            - Any type with filter, flatMap and map
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ## Hands On!
           </script>
         </section>
         <section data-markdown>
