@@ -31,7 +31,7 @@
             ## Workshop about Scala
             <img src="images/logo-springernature.svg" alt="SpringerNature" style="border: 0; background-color: white; padding: 10px;">
             * * *
-            ###### xx/06/2017 - Josep Prat / Jim Kinsey - [@jlprat](https://github.com/jlprat)
+            ###### 06/06/2017 - Josep Prat / Jim Kinsey - [@jlprat](https://github.com/jlprat)
           </script>
         </section>
         <section data-markdown>
@@ -2001,13 +2001,13 @@
           <script type="text/template">
             ## Collections API
             Usual suspects:
-            - length
+            - `length` / `size`
             - get (called `apply`)
-            - isEmpty
-            - sort
-            - contains
-            - add (but with strange names)
-            - iterator
+            - `isEmpty`
+            - `sort`
+            - `contains`
+            - add (but with "strange" names)
+            - `iterator`
           </script>
         </section>
         <section data-markdown>
@@ -2018,22 +2018,22 @@
         <section data-markdown>
           <script type="text/template">
             ## Collections API - New friends
-            - filter
-            - map
-            - flatMap
-            - take / drop / slice
-            - reverse
+            - `filter`
+            - `map`
+            - `flatMap`
+            - `take / `drop` / `slice`
+            - `reverse`
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
             ## Collections API - New friends
-            - fold
-            - reduce
-            - forall / exists
-            - groupBy
-            - partition
-            - zip / unzip
+            - `fold`
+            - `reduce`
+            - `forall` / `exists`
+            - `groupBy`
+            - `partition`
+            - `zip` / `unzip`
           </script>
         </section>
         <section data-markdown>
@@ -2063,7 +2063,7 @@
         <section data-markdown>
           <script type="text/template">
             # For Comprehension
-            - Easier way to deal with nested map and flatMap
+            - Easier way to deal with nested `map` and `flatMap`
             - It has filter capabilities
             - Can define variables
           </script>
@@ -2083,9 +2083,9 @@
         <section data-markdown>
           <script type="text/template">
             # For Comprehension
-            - Converted to sequence of filter, flatMap and map
+            - Sequence of `filter`, `flatMap` and `map`
             - Not only for Collections
-            - Any type with filter, flatMap and map
+            - Any type with `filter`, `flatMap` and `map`
           </script>
         </section>
         <section data-markdown>
@@ -2151,34 +2151,62 @@
         </section>
         <section data-markdown>
           <script type="text/template">
+            # Future
+            - Value that may or may not exist yet
+            - Might fail
+            - Future != Different Thread
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
+            ## Future API
+            - Revolve around `ExecutionContext`
+            - Defines in which Thread to execute
+            - Asynchronous
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
+            ## Future API
+            - `map` / `flatmap`
+            - `filter`
+            - `zip`
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
+            ## Retrieving the value
+            - Non Blocking
+              - `foreach` / `onComplete` / `andThen`
+            - Blocking
+              - `Await.result` / `Await.ready`
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
+            ## Hands On!
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
+            # Useful Resources
+            - [Scala API](http://scala-lang.org/files/archive/api/current/)
+            - [Alvin Alexander's Blog](http://alvinalexander.com/scala)
+            - [Victor Klang's Blog](http://viktorklang.com/blog/)
+            - [ScalaFiddle - Scala.js in the browser](https://scalafiddle.io/)
+            - [Scastie - Execute Scala remotely](https://scastie.scala-lang.org/)
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
+            # Questions?
           </script>
         </section>
         <section data-markdown>
           <script type="text/template">
+            # Thank you!
+            * * *
+            ###### 06/06/2017 - Josep Prat / Jim Kinsey - [@jlprat](https://github.com/jlprat)
           </script>
         </section>
 	  </div>
