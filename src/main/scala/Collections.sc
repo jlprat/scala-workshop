@@ -20,6 +20,13 @@ seq :+ 0
 val other = Seq(5, 6, 7)
 other ++ seq
 
+// Mutable Collections
+import scala.collection.mutable.ArrayBuffer
+
+val mutable = ArrayBuffer(1, 2, 3)
+mutable.+=(4)
+mutable += 5
+
 
 // Functions that keep the general structure of the collection
 val numbers = Seq.tabulate(50)(identity)
